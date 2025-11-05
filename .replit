@@ -1,2 +1,30 @@
+modules = ["java-graalvm-22"]
 [agent]
 expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["maven"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "build-plugin"
+
+[[workflows.workflow]]
+name = "build-plugin"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mvn clean package && echo \"✓ Plugin built successfully! Check target/BoxPvPCore-1.0.0.jar\""
+
+[workflows.workflow.metadata]
+outputType = "console"

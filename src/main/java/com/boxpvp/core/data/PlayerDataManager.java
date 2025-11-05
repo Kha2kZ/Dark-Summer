@@ -1,0 +1,93 @@
+package com.boxpvp.core.data;
+
+import com.boxpvp.core.BoxPvPCore;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class PlayerDataManager {
+    
+    private final BoxPvPCore plugin;
+    private final File dataFolder;
+    private final Map<UUID, PlayerData> playerDataCache;
+    
+    public PlayerDataManager(BoxPvPCore plugin) {
+        this.plugin = plugin;
+        this.dataFolder = new File(plugin.getDataFolder(), "playerdata");
+        this.playerDataCache = new HashMap<>();
+        
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+    }
+    
+    public PlayerData getPlayerData(Player player) {
+        return getPlayerData(player.getUniqueId());
+    }
+    
+    public PlayerData getPlayerData(UUID uuid) {
+        if (playerDataCache.containsKey(uuid)) {
+            return playerDataCache.get(uuid);
+        }
+        
+        PlayerData data = loadPlayerData(uuid);
+        playerDataCache.put(uuid, data);
+        return data;
+    }
+    
+    private PlayerData loadPlayerData(UUID uuid) {
+        File file = new File(dataFolder, uuid.toString() + ".yml");
+        
+        if (!file.exists()) {
+            return new PlayerData(uuid, plugin.getConfig().getInt("economy.starting-balance", 100));
+        }
+        
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        
+        int kills = config.getInt("kills", 0);
+        int deaths = config.getInt("deaths", 0);
+        double balance = config.getDouble("balance", plugin.getConfig().getInt("economy.starting-balance", 100));
+        long lastLogin = config.getLong("last-login", System.currentTimeMillis());
+        
+        return new PlayerData(uuid, kills, deaths, balance, lastLogin);
+    }
+    
+    public void savePlayerData(UUID uuid) {
+        if (!playerDataCache.containsKey(uuid)) {
+            return;
+        }
+        
+        PlayerData data = playerDataCache.get(uuid);
+        File file = new File(dataFolder, uuid.toString() + ".yml");
+        
+        FileConfiguration config = new YamlConfiguration();
+        config.set("kills", data.getKills());
+        config.set("deaths", data.getDeaths());
+        config.set("balance", data.getBalance());
+        config.set("last-login", data.getLastLogin());
+        
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to save player data for " + uuid);
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveAllData() {
+        for (UUID uuid : playerDataCache.keySet()) {
+            savePlayerData(uuid);
+        }
+    }
+    
+    public void unloadPlayerData(UUID uuid) {
+        savePlayerData(uuid);
+        playerDataCache.remove(uuid);
+    }
+}

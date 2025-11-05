@@ -1,0 +1,40 @@
+name: BoxPvPCore
+version: 1.0.0
+main: com.boxpvp.core.BoxPvPCore
+api-version: '1.16'
+author: YourName
+description: Core plugin for Box PvP gamemode
+
+commands:
+  spawn:
+    description: Teleport to spawn point
+    usage: /<command>
+    aliases: [hub]
+  
+  stats:
+    description: View your player statistics
+    usage: /<command> [player]
+    aliases: [statistics]
+  
+  shop:
+    description: Open the shop GUI
+    usage: /<command>
+    aliases: [store, buy]
+  
+  arena:
+    description: Join or manage arena matches
+    usage: /<command> [join|leave|list]
+    aliases: [pvp, duel]
+  
+  setspawn:
+    description: Set the spawn point (Admin only)
+    usage: /<command>
+    permission: boxpvp.admin
+
+permissions:
+  boxpvp.admin:
+    description: Access to admin commands
+    default: op
+  boxpvp.player:
+    description: Access to basic player commands
+    default: true
