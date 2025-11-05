@@ -11,12 +11,13 @@ This is a Minecraft Paper plugin development environment for creating Box PvP ga
 
 ## Features Implemented
 1. Custom command system (/spawn, /stats, /shop, /arena, /setspawn)
-2. Economy system with kill rewards and death penalties
-3. Player data management (kills, deaths, balance tracking)
-4. Shop GUI with purchasable items
-5. Basic arena command structure
-6. Event listeners for player join/quit/death
-7. Maven build system
+2. Warp system (/warp, /setwarp) for trade, crate, and afk zones
+3. Economy system with kill rewards and death penalties
+4. Player data management (kills, deaths, balance tracking)
+5. Shop GUI with purchasable items (full armor sets fixed)
+6. Basic arena command structure
+7. Event listeners for player join/quit/death
+8. Maven build system
 
 ## Project Structure
 ```
@@ -60,6 +61,9 @@ The compiled plugin will be in `target/BoxPvPCore-1.0.0.jar`
 - 2025-11-05: Implemented core commands and player data system
 - 2025-11-05: Added shop GUI and economy system
 - 2025-11-05: Created build workflow
+- 2025-11-05: Fixed api-version compatibility (1.16-1.21.x)
+- 2025-11-05: Fixed shop armor sets to give full sets instead of just chestplate
+- 2025-11-05: Added warp system with /warp and /setwarp commands
 
 ## Next Steps (Future Phases)
 1. Mining system with regenerating blocks

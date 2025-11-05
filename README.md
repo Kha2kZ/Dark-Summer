@@ -15,7 +15,10 @@ Box PvP is a Minecraft gamemode that combines resource grinding with intense PvP
 - `/stats [player]` - View player statistics (kills, deaths, K/D ratio, balance)
 - `/shop` - Open the shop GUI to buy gear
 - `/arena [join|leave|list]` - Arena matchmaking system
+- `/warp <name>` - Teleport to warp locations (trade, crate, afk, etc.)
+- `/warp` - List all available warps
 - `/setspawn` - Set spawn point (Admin only)
+- `/setwarp <name>` - Create a warp location (Admin only)
 
 #### Economy System
 - Players start with $100
@@ -39,6 +42,14 @@ Interactive GUI shop with:
 - K/D Ratio
 - Balance
 - Last login time
+
+#### Warp System
+Custom teleport locations for your server:
+- **Trade Warp** - Where players trade materials after mining
+- **Crate Warp** - Location for opening crates with keys
+- **AFK Warp** - Designated AFK zone
+- Admins can create unlimited custom warps
+- Warp data persists across server restarts
 
 ## Installation
 
@@ -72,11 +83,21 @@ Edit `plugins/BoxPvPCore/config.yml` to customize:
 - Shop items and prices
 - Messages
 
-### Step 4: Set Spawn Point
+### Step 4: Set Spawn Point and Warps
 
 1. Join your server
 2. Stand where you want spawn to be
 3. Run `/setspawn` (requires op or `boxpvp.admin` permission)
+
+### Step 5: Set Up Warp Locations
+
+After your friend builds the map, set up warp points:
+
+1. Go to the trading area → `/setwarp trade`
+2. Go to the crate area → `/setwarp crate`
+3. Go to the AFK zone → `/setwarp afk`
+
+Players can then use `/warp trade`, `/warp crate`, or `/warp afk` to teleport!
 
 ## Configuration
 
