@@ -1,4 +1,4 @@
-modules = ["java-graalvm22.3"]
+modules = ["java-graalvm22.3", "java-21"]
 [agent]
 expertMode = true
 
@@ -22,9 +22,9 @@ args = "build-plugin"
 name = "build-plugin"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "mvn clean package && echo \"✓ Plugin built successfully! Check target/BoxPvPCore-1.0.0.jar\""
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mvn clean package"
