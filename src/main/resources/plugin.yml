@@ -30,6 +30,16 @@ commands:
     description: Set the spawn point (Admin only)
     usage: /<command>
     permission: boxpvp.admin
+  
+  warp:
+    description: Teleport to a warp location (trade, crate, afk)
+    usage: /<command> [name]
+    aliases: [warps]
+  
+  setwarp:
+    description: Set a warp location (Admin only)
+    usage: /<command> <name>
+    permission: boxpvp.admin
 
 permissions:
   boxpvp.admin:

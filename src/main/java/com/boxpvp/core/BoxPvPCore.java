@@ -2,6 +2,7 @@ package com.boxpvp.core;
 
 import com.boxpvp.core.commands.*;
 import com.boxpvp.core.data.PlayerDataManager;
+import com.boxpvp.core.data.WarpManager;
 import com.boxpvp.core.listeners.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,6 +12,7 @@ public class BoxPvPCore extends JavaPlugin {
     
     private static BoxPvPCore instance;
     private PlayerDataManager playerDataManager;
+    private WarpManager warpManager;
     private Logger logger;
     
     @Override
@@ -23,6 +25,7 @@ public class BoxPvPCore extends JavaPlugin {
         saveDefaultConfig();
         
         playerDataManager = new PlayerDataManager(this);
+        warpManager = new WarpManager(this);
         
         registerCommands();
         registerListeners();
@@ -47,6 +50,8 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopCommand(this));
         getCommand("arena").setExecutor(new ArenaCommand(this));
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this));
+        getCommand("warp").setExecutor(new WarpCommand(this));
+        getCommand("setwarp").setExecutor(new SetWarpCommand(this));
     }
     
     private void registerListeners() {
@@ -59,5 +64,9 @@ public class BoxPvPCore extends JavaPlugin {
     
     public PlayerDataManager getPlayerDataManager() {
         return playerDataManager;
+    }
+    
+    public WarpManager getWarpManager() {
+        return warpManager;
     }
 }
