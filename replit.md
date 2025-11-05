@@ -10,14 +10,42 @@ This is a Minecraft Paper plugin development environment for creating Box PvP ga
 - **Development Language**: Java 17
 
 ## Features Implemented
-1. Custom command system (/spawn, /stats, /shop, /arena, /setspawn)
-2. Warp system (/warp, /setwarp) for trade, crate, and afk zones
-3. Economy system with kill rewards and death penalties
-4. Player data management (kills, deaths, balance tracking)
-5. Shop GUI with purchasable items (full armor sets fixed)
-6. Basic arena command structure
-7. Event listeners for player join/quit/death
-8. Maven build system
+1. **Multi-Currency Economy System**
+   - Three currencies: Money, Gems, and Coins
+   - Full persistence in player YAML files
+   - Kill rewards and death penalties (money-based)
+
+2. **Player-to-Player Trading** (/trade)
+   - Request/confirmation system with 60-second timeout
+   - Interactive trade GUI where both players can add items
+   - Proximity requirement: 10 blocks, same world
+   - Protected against cross-world trades
+
+3. **Auction House** (/ah)
+   - List items with `/ah sell <price> <money|gems|coins>`
+   - Browse GUI with pagination (arrows for navigation)
+   - Currency filter button (cycles through all/money/gems/coins)
+   - Item details on hover (name, price, seller, date)
+   - Purchase confirmation GUI with buy/cancel options
+   - Listings persist in auctions.yml
+
+4. **Player Data Management**
+   - Tracks kills, deaths, and all three currency balances
+   - Automatic save/load from YAML files
+
+5. **Command System**
+   - /spawn, /stats, /arena, /setspawn
+   - /warp, /setwarp (trade, crate, afk zones)
+   - /trade <player>
+   - /ah (main GUI), /ah sell <price> <currency>
+
+6. **Event Listeners**
+   - Player join/quit handling
+   - Death handling with currency penalties
+
+7. **Maven Build System**
+   - Clean compilation of 18 source files
+   - Shaded jar output for easy deployment
 
 ## Project Structure
 ```
@@ -64,6 +92,11 @@ The compiled plugin will be in `target/BoxPvPCore-1.0.0.jar`
 - 2025-11-05: Fixed api-version compatibility (1.16-1.21.x)
 - 2025-11-05: Fixed shop armor sets to give full sets instead of just chestplate
 - 2025-11-05: Added warp system with /warp and /setwarp commands
+- 2025-11-05: **Removed /shop command** (will be replaced with NPC-based shop later)
+- 2025-11-05: **Implemented multi-currency economy** (money, gems, coins) in PlayerData
+- 2025-11-05: **Created player-to-player trading system** with GUI and proximity checks
+- 2025-11-05: **Built comprehensive auction house** with currency filters and pagination
+- 2025-11-05: **Fixed critical bug** in trade command: added world validation before distance calculation
 
 ## Next Steps (Future Phases)
 1. Mining system with regenerating blocks
