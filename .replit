@@ -1,4 +1,4 @@
-modules = ["java-graalvm-22"]
+modules = ["java-graalvm22.3"]
 [agent]
 expertMode = true
 
