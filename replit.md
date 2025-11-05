@@ -29,22 +29,33 @@ This is a Minecraft Paper plugin development environment for creating Box PvP ga
    - Purchase confirmation GUI with buy/cancel options
    - Listings persist in auctions.yml
 
-4. **Player Data Management**
+4. **Gift Code System** (/giftcode, /creategiftcode) [NEW!]
+   - Admins create codes with `/creategiftcode <code> <maxuses>`
+   - Interactive GUI to add custom items (enchanted, named, ANY items)
+   - Click currency icons to set money/gems/coins rewards
+   - Players redeem with `/giftcode <code>`
+   - Tracks usage per player (prevents double-claiming)
+   - Supports one-time or multi-use codes (-1 for unlimited)
+   - Full item serialization preserves enchantments, names, lore
+
+5. **Player Data Management**
    - Tracks kills, deaths, and all three currency balances
    - Automatic save/load from YAML files
 
-5. **Command System**
+6. **Command System**
    - /spawn, /stats, /arena, /setspawn
    - /warp, /setwarp (trade, crate, afk zones)
    - /trade <player>
    - /ah (main GUI), /ah sell <price> <currency>
+   - /giftcode <code> (redeem gift codes)
+   - /creategiftcode <code> <maxuses> (admin only)
 
-6. **Event Listeners**
+7. **Event Listeners**
    - Player join/quit handling
    - Death handling with currency penalties
 
-7. **Maven Build System**
-   - Clean compilation of 18 source files
+8. **Maven Build System**
+   - Clean compilation of 22 source files
    - Shaded jar output for easy deployment
 
 ## Project Structure
@@ -97,6 +108,8 @@ The compiled plugin will be in `target/BoxPvPCore-1.0.0.jar`
 - 2025-11-05: **Created player-to-player trading system** with GUI and proximity checks
 - 2025-11-05: **Built comprehensive auction house** with currency filters and pagination
 - 2025-11-05: **Fixed critical bug** in trade command: added world validation before distance calculation
+- 2025-11-05: **Implemented gift code system** with GUI for admins to create codes with custom items and currency rewards
+- 2025-11-05: **Fixed gift code slot mapping bug** - changed from List to Map for proper item-to-slot tracking
 
 ## Next Steps (Future Phases)
 1. Mining system with regenerating blocks

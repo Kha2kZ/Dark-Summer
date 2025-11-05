@@ -45,6 +45,17 @@ commands:
     description: Access the auction house (black market)
     usage: /<command> [sell <price> <money|gems|coins>]
     aliases: [auctionhouse, blackmarket, market]
+  
+  giftcode:
+    description: Redeem a gift code for rewards
+    usage: /<command> <code>
+    aliases: [redeem, code]
+  
+  creategiftcode:
+    description: Create a new gift code with rewards (Admin only)
+    usage: /<command> <code> <maxuses>
+    permission: boxpvp.admin
+    aliases: [createcode, makegiftcode]
 
 permissions:
   boxpvp.admin:

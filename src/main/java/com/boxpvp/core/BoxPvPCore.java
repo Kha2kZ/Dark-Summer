@@ -14,6 +14,7 @@ public class BoxPvPCore extends JavaPlugin {
     private WarpManager warpManager;
     private AuctionManager auctionManager;
     private TradeManager tradeManager;
+    private GiftCodeManager giftCodeManager;
     private Logger logger;
     
     @Override
@@ -29,6 +30,7 @@ public class BoxPvPCore extends JavaPlugin {
         warpManager = new WarpManager(this);
         auctionManager = new AuctionManager(this);
         tradeManager = new TradeManager();
+        giftCodeManager = new GiftCodeManager(this);
         
         registerCommands();
         registerListeners();
@@ -48,6 +50,10 @@ public class BoxPvPCore extends JavaPlugin {
             auctionManager.saveAll();
         }
         
+        if (giftCodeManager != null) {
+            giftCodeManager.saveAll();
+        }
+        
         logger.info("BoxPvPCore has been disabled!");
     }
     
@@ -60,6 +66,8 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("setwarp").setExecutor(new SetWarpCommand(this));
         getCommand("trade").setExecutor(new TradeCommand(this, tradeManager));
         getCommand("ah").setExecutor(new AuctionHouseCommand(this, auctionManager));
+        getCommand("giftcode").setExecutor(new GiftCodeCommand(this));
+        getCommand("creategiftcode").setExecutor(new CreateGiftCodeCommand(this));
     }
     
     private void registerListeners() {
@@ -84,5 +92,9 @@ public class BoxPvPCore extends JavaPlugin {
     
     public TradeManager getTradeManager() {
         return tradeManager;
+    }
+    
+    public GiftCodeManager getGiftCodeManager() {
+        return giftCodeManager;
     }
 }
