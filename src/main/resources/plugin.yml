@@ -16,11 +16,6 @@ commands:
     usage: /<command> [player]
     aliases: [statistics]
   
-  shop:
-    description: Open the shop GUI
-    usage: /<command>
-    aliases: [store, buy]
-  
   arena:
     description: Join or manage arena matches
     usage: /<command> [join|leave|list]
@@ -40,6 +35,16 @@ commands:
     description: Set a warp location (Admin only)
     usage: /<command> <name>
     permission: boxpvp.admin
+  
+  trade:
+    description: Trade items with nearby players
+    usage: /<command> <player>
+    aliases: [t]
+  
+  ah:
+    description: Access the auction house (black market)
+    usage: /<command> [sell <price> <money|gems|coins>]
+    aliases: [auctionhouse, blackmarket, market]
 
 permissions:
   boxpvp.admin:

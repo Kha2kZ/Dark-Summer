@@ -1,8 +1,7 @@
 package com.boxpvp.core;
 
 import com.boxpvp.core.commands.*;
-import com.boxpvp.core.data.PlayerDataManager;
-import com.boxpvp.core.data.WarpManager;
+import com.boxpvp.core.data.*;
 import com.boxpvp.core.listeners.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +12,8 @@ public class BoxPvPCore extends JavaPlugin {
     private static BoxPvPCore instance;
     private PlayerDataManager playerDataManager;
     private WarpManager warpManager;
+    private AuctionManager auctionManager;
+    private TradeManager tradeManager;
     private Logger logger;
     
     @Override
@@ -26,6 +27,8 @@ public class BoxPvPCore extends JavaPlugin {
         
         playerDataManager = new PlayerDataManager(this);
         warpManager = new WarpManager(this);
+        auctionManager = new AuctionManager(this);
+        tradeManager = new TradeManager();
         
         registerCommands();
         registerListeners();
@@ -41,17 +44,22 @@ public class BoxPvPCore extends JavaPlugin {
             playerDataManager.saveAllData();
         }
         
+        if (auctionManager != null) {
+            auctionManager.saveAll();
+        }
+        
         logger.info("BoxPvPCore has been disabled!");
     }
     
     private void registerCommands() {
         getCommand("spawn").setExecutor(new SpawnCommand(this));
         getCommand("stats").setExecutor(new StatsCommand(this));
-        getCommand("shop").setExecutor(new ShopCommand(this));
         getCommand("arena").setExecutor(new ArenaCommand(this));
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this));
         getCommand("warp").setExecutor(new WarpCommand(this));
         getCommand("setwarp").setExecutor(new SetWarpCommand(this));
+        getCommand("trade").setExecutor(new TradeCommand(this, tradeManager));
+        getCommand("ah").setExecutor(new AuctionHouseCommand(this, auctionManager));
     }
     
     private void registerListeners() {
@@ -68,5 +76,13 @@ public class BoxPvPCore extends JavaPlugin {
     
     public WarpManager getWarpManager() {
         return warpManager;
+    }
+    
+    public AuctionManager getAuctionManager() {
+        return auctionManager;
+    }
+    
+    public TradeManager getTradeManager() {
+        return tradeManager;
     }
 }

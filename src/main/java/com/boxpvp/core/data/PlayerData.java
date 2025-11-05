@@ -8,17 +8,21 @@ public class PlayerData {
     private int kills;
     private int deaths;
     private double balance;
+    private double gems;
+    private double coins;
     private long lastLogin;
     
     public PlayerData(UUID uuid, double startingBalance) {
-        this(uuid, 0, 0, startingBalance, System.currentTimeMillis());
+        this(uuid, 0, 0, startingBalance, 0, 0, System.currentTimeMillis());
     }
     
-    public PlayerData(UUID uuid, int kills, int deaths, double balance, long lastLogin) {
+    public PlayerData(UUID uuid, int kills, int deaths, double balance, double gems, double coins, long lastLogin) {
         this.uuid = uuid;
         this.kills = kills;
         this.deaths = deaths;
         this.balance = balance;
+        this.gems = gems;
+        this.coins = coins;
         this.lastLogin = lastLogin;
     }
     
@@ -68,6 +72,46 @@ public class PlayerData {
     
     public boolean hasBalance(double amount) {
         return this.balance >= amount;
+    }
+    
+    public double getGems() {
+        return gems;
+    }
+    
+    public void setGems(double gems) {
+        this.gems = gems;
+    }
+    
+    public void addGems(double amount) {
+        this.gems += amount;
+    }
+    
+    public void removeGems(double amount) {
+        this.gems -= amount;
+    }
+    
+    public boolean hasGems(double amount) {
+        return this.gems >= amount;
+    }
+    
+    public double getCoins() {
+        return coins;
+    }
+    
+    public void setCoins(double coins) {
+        this.coins = coins;
+    }
+    
+    public void addCoins(double amount) {
+        this.coins += amount;
+    }
+    
+    public void removeCoins(double amount) {
+        this.coins -= amount;
+    }
+    
+    public boolean hasCoins(double amount) {
+        return this.coins >= amount;
     }
     
     public long getLastLogin() {

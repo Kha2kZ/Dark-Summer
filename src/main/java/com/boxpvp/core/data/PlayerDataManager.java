@@ -53,9 +53,11 @@ public class PlayerDataManager {
         int kills = config.getInt("kills", 0);
         int deaths = config.getInt("deaths", 0);
         double balance = config.getDouble("balance", plugin.getConfig().getInt("economy.starting-balance", 100));
+        double gems = config.getDouble("gems", 0);
+        double coins = config.getDouble("coins", 0);
         long lastLogin = config.getLong("last-login", System.currentTimeMillis());
         
-        return new PlayerData(uuid, kills, deaths, balance, lastLogin);
+        return new PlayerData(uuid, kills, deaths, balance, gems, coins, lastLogin);
     }
     
     public void savePlayerData(UUID uuid) {
@@ -70,6 +72,8 @@ public class PlayerDataManager {
         config.set("kills", data.getKills());
         config.set("deaths", data.getDeaths());
         config.set("balance", data.getBalance());
+        config.set("gems", data.getGems());
+        config.set("coins", data.getCoins());
         config.set("last-login", data.getLastLogin());
         
         try {
