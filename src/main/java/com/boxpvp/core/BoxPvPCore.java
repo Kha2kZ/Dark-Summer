@@ -15,6 +15,8 @@ public class BoxPvPCore extends JavaPlugin {
     private AuctionManager auctionManager;
     private TradeManager tradeManager;
     private GiftCodeManager giftCodeManager;
+    private RankManager rankManager;
+    private VirtualChestManager virtualChestManager;
     private Logger logger;
     
     @Override
@@ -31,6 +33,8 @@ public class BoxPvPCore extends JavaPlugin {
         auctionManager = new AuctionManager(this);
         tradeManager = new TradeManager();
         giftCodeManager = new GiftCodeManager(this);
+        rankManager = new RankManager(this);
+        virtualChestManager = new VirtualChestManager(this);
         
         registerCommands();
         registerListeners();
@@ -68,10 +72,18 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("ah").setExecutor(new AuctionHouseCommand(this, auctionManager));
         getCommand("giftcode").setExecutor(new GiftCodeCommand(this));
         getCommand("creategiftcode").setExecutor(new CreateGiftCodeCommand(this));
+        getCommand("rank").setExecutor(new RankCommand(this));
+        getCommand("pv").setExecutor(new PvCommand(this));
+        getCommand("nick").setExecutor(new NickCommand(this));
+        getCommand("feed").setExecutor(new FeedCommand(this));
+        getCommand("heal").setExecutor(new HealCommand(this));
+        getCommand("fly").setExecutor(new FlyCommand(this));
+        getCommand("invsee").setExecutor(new InvseeCommand(this));
     }
     
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getServer().getPluginManager().registerEvents(new com.boxpvp.core.listeners.MiningListener(this), this);
     }
     
     public static BoxPvPCore getInstance() {
@@ -96,5 +108,13 @@ public class BoxPvPCore extends JavaPlugin {
     
     public GiftCodeManager getGiftCodeManager() {
         return giftCodeManager;
+    }
+    
+    public RankManager getRankManager() {
+        return rankManager;
+    }
+    
+    public VirtualChestManager getVirtualChestManager() {
+        return virtualChestManager;
     }
 }

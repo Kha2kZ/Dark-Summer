@@ -56,6 +56,38 @@ commands:
     usage: /<command> <code> <maxuses>
     permission: boxpvp.admin
     aliases: [createcode, makegiftcode]
+  
+  rank:
+    description: Open the rank shop GUI
+    usage: /<command>
+    aliases: [ranks, rankshop]
+  
+  pv:
+    description: Open your virtual chest
+    usage: /<command> <1-40>
+    aliases: [vault, chest, backpack]
+  
+  nick:
+    description: Change your nickname
+    usage: /<command> <nickname|reset>
+    aliases: [nickname]
+  
+  feed:
+    description: Restore your hunger
+    usage: /<command>
+  
+  heal:
+    description: Restore your health and hunger
+    usage: /<command>
+  
+  fly:
+    description: Toggle fly mode
+    usage: /<command>
+  
+  invsee:
+    description: View another player's inventory
+    usage: /<command> <player>
+    aliases: [inv, inventory]
 
 permissions:
   boxpvp.admin:

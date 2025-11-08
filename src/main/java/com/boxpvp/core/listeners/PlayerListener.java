@@ -2,6 +2,7 @@ package com.boxpvp.core.listeners;
 
 import com.boxpvp.core.BoxPvPCore;
 import com.boxpvp.core.data.PlayerData;
+import com.boxpvp.core.data.Rank;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +35,7 @@ public class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayerDataManager().unloadPlayerData(player.getUniqueId());
+        plugin.getVirtualChestManager().unloadVaults(player.getUniqueId());
     }
     
     @EventHandler
@@ -42,24 +44,51 @@ public class PlayerListener implements Listener {
         Player killer = victim.getKiller();
         
         PlayerData victimData = plugin.getPlayerDataManager().getPlayerData(victim);
+        Rank victimRank = victimData.getRank();
         victimData.addDeath();
         
-        double deathPenalty = plugin.getConfig().getDouble("economy.death-penalty", 25);
-        if (victimData.hasBalance(deathPenalty)) {
-            victimData.removeBalance(deathPenalty);
-            victim.sendMessage(plugin.getConfig().getString("messages.prefix", "") + 
-                "§cYou lost §e$" + deathPenalty + " §cfor dying!");
+        String prefix = plugin.getConfig().getString("messages.prefix", "");
+        
+        double deathMoneyPenalty = victimRank.getDeathMoneyPenalty();
+        if (deathMoneyPenalty > 0) {
+            deathMoneyPenalty = plugin.getConfig().getDouble("economy.death-penalty", 25);
+        }
+        if (!victimRank.isImmuneToDeathPenalty() && deathMoneyPenalty > 0) {
+            if (victimData.hasBalance(deathMoneyPenalty)) {
+                victimData.removeBalance(deathMoneyPenalty);
+                victim.sendMessage(prefix + "§cYou lost §e$" + deathMoneyPenalty + " §cfor dying!");
+            }
+        }
+        
+        double deathGemsPenalty = victimRank.getDeathGemsPenalty();
+        if (deathGemsPenalty > 0 && victimData.hasGems(deathGemsPenalty)) {
+            victimData.removeGems(deathGemsPenalty);
+            victim.sendMessage(prefix + "§cYou lost §b" + deathGemsPenalty + " gems §cfor dying!");
         }
         
         if (killer != null && killer != victim) {
             PlayerData killerData = plugin.getPlayerDataManager().getPlayerData(killer);
+            Rank killerRank = killerData.getRank();
             killerData.addKill();
             
             double killReward = plugin.getConfig().getDouble("economy.kill-reward", 50);
             killerData.addBalance(killReward);
+            killer.sendMessage(prefix + "§a+1 Kill! You earned §e$" + killReward + "§a!");
             
-            killer.sendMessage(plugin.getConfig().getString("messages.prefix", "") + 
-                "§a+1 Kill! You earned §e$" + killReward + "§a!");
+            if (killerRank.hasKillBonus()) {
+                double bonusMoney = killerRank.getKillMoneyBonus();
+                double bonusGems = killerRank.getKillGemsBonus();
+                
+                if (bonusMoney > 0) {
+                    killerData.addBalance(bonusMoney);
+                    killer.sendMessage(prefix + "§6Rank Bonus: §e+$" + bonusMoney + " money!");
+                }
+                
+                if (bonusGems > 0) {
+                    killerData.addGems(bonusGems);
+                    killer.sendMessage(prefix + "§6Rank Bonus: §b+" + bonusGems + " gems!");
+                }
+            }
         }
     }
 }

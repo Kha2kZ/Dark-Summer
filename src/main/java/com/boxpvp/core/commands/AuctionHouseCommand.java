@@ -81,6 +81,15 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
             
             CurrencyType currencyType = CurrencyType.fromString(args[2]);
             
+            Rank rank = plugin.getRankManager().getRank(player);
+            int playerListings = auctionManager.getPlayerListings(player.getUniqueId()).size();
+            
+            if (playerListings >= rank.getMaxAuctionListings()) {
+                player.sendMessage(prefix + "§cYou have reached your listing limit! (" + rank.getMaxAuctionListings() + ")");
+                player.sendMessage(prefix + "§7Upgrade your rank with /rank to list more items!");
+                return true;
+            }
+            
             AuctionListing listing = new AuctionListing(
                 player.getUniqueId(),
                 player.getName(),
