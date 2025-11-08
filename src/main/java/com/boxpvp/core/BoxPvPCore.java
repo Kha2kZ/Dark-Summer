@@ -17,6 +17,7 @@ public class BoxPvPCore extends JavaPlugin {
     private GiftCodeManager giftCodeManager;
     private RankManager rankManager;
     private VirtualChestManager virtualChestManager;
+    private AutoCraftingManager autoCraftingManager;
     private Logger logger;
     
     @Override
@@ -35,6 +36,7 @@ public class BoxPvPCore extends JavaPlugin {
         giftCodeManager = new GiftCodeManager(this);
         rankManager = new RankManager(this);
         virtualChestManager = new VirtualChestManager(this);
+        autoCraftingManager = new AutoCraftingManager(this);
         
         registerCommands();
         registerListeners();
@@ -58,6 +60,14 @@ public class BoxPvPCore extends JavaPlugin {
             giftCodeManager.saveAll();
         }
         
+        if (autoCraftingManager != null) {
+            autoCraftingManager.saveAll();
+        }
+        
+        if (virtualChestManager != null) {
+            virtualChestManager.saveAllVaults();
+        }
+        
         logger.info("BoxPvPCore has been disabled!");
     }
     
@@ -79,6 +89,7 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("heal").setExecutor(new HealCommand(this));
         getCommand("fly").setExecutor(new FlyCommand(this));
         getCommand("invsee").setExecutor(new InvseeCommand(this));
+        getCommand("tuchetao").setExecutor(new TuChetaoCommand(this));
     }
     
     private void registerListeners() {
@@ -116,5 +127,9 @@ public class BoxPvPCore extends JavaPlugin {
     
     public VirtualChestManager getVirtualChestManager() {
         return virtualChestManager;
+    }
+    
+    public AutoCraftingManager getAutoCraftingManager() {
+        return autoCraftingManager;
     }
 }

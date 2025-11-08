@@ -88,6 +88,11 @@ commands:
     description: View another player's inventory
     usage: /<command> <player>
     aliases: [inv, inventory]
+  
+  tuchetao:
+    description: Auto-craft items using recipes
+    usage: /<command> [create]
+    aliases: [autocraft, ac]
 
 permissions:
   boxpvp.admin:

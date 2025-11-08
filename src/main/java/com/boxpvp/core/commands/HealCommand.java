@@ -32,8 +32,7 @@ public class HealCommand implements CommandExecutor {
             return true;
         }
         
-        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-        player.setHealth(maxHealth);
+        player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
         player.setSaturation(20);
         player.setFireTicks(0);
