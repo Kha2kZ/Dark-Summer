@@ -127,4 +127,12 @@ public class VirtualChestManager {
         saveAllVaults(uuid);
         vaultCache.remove(uuid);
     }
+    
+    public void saveAllLoadedVaults() {
+        plugin.getLogger().info("Saving all loaded vaults...");
+        for (UUID uuid : vaultCache.keySet()) {
+            saveAllVaults(uuid);
+        }
+        plugin.getLogger().info("Saved " + vaultCache.size() + " player vault data");
+    }
 }

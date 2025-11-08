@@ -65,7 +65,7 @@ public class BoxPvPCore extends JavaPlugin {
         }
         
         if (virtualChestManager != null) {
-            virtualChestManager.saveAllVaults();
+            virtualChestManager.saveAllLoadedVaults();
         }
         
         logger.info("BoxPvPCore has been disabled!");
