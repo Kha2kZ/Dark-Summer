@@ -56,8 +56,10 @@ public class PlayerDataManager {
         double gems = config.getDouble("gems", 0);
         double coins = config.getDouble("coins", 0);
         long lastLogin = config.getLong("last-login", System.currentTimeMillis());
+        Rank rank = Rank.fromString(config.getString("rank", "MEMBER"));
+        String nickname = config.getString("nickname", null);
         
-        return new PlayerData(uuid, kills, deaths, balance, gems, coins, lastLogin);
+        return new PlayerData(uuid, kills, deaths, balance, gems, coins, lastLogin, rank, nickname);
     }
     
     public void savePlayerData(UUID uuid) {
@@ -75,6 +77,8 @@ public class PlayerDataManager {
         config.set("gems", data.getGems());
         config.set("coins", data.getCoins());
         config.set("last-login", data.getLastLogin());
+        config.set("rank", data.getRank().name());
+        config.set("nickname", data.getNickname());
         
         try {
             config.save(file);

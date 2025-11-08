@@ -11,12 +11,14 @@ public class PlayerData {
     private double gems;
     private double coins;
     private long lastLogin;
+    private Rank rank;
+    private String nickname;
     
     public PlayerData(UUID uuid, double startingBalance) {
-        this(uuid, 0, 0, startingBalance, 0, 0, System.currentTimeMillis());
+        this(uuid, 0, 0, startingBalance, 0, 0, System.currentTimeMillis(), Rank.MEMBER, null);
     }
     
-    public PlayerData(UUID uuid, int kills, int deaths, double balance, double gems, double coins, long lastLogin) {
+    public PlayerData(UUID uuid, int kills, int deaths, double balance, double gems, double coins, long lastLogin, Rank rank, String nickname) {
         this.uuid = uuid;
         this.kills = kills;
         this.deaths = deaths;
@@ -24,6 +26,8 @@ public class PlayerData {
         this.gems = gems;
         this.coins = coins;
         this.lastLogin = lastLogin;
+        this.rank = rank != null ? rank : Rank.MEMBER;
+        this.nickname = nickname;
     }
     
     public UUID getUuid() {
@@ -127,5 +131,25 @@ public class PlayerData {
             return kills;
         }
         return (double) kills / deaths;
+    }
+    
+    public Rank getRank() {
+        return rank;
+    }
+    
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+    
+    public String getNickname() {
+        return nickname;
+    }
+    
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    
+    public boolean hasNickname() {
+        return nickname != null && !nickname.isEmpty();
     }
 }
