@@ -93,6 +93,18 @@ commands:
     description: Auto-craft items using recipes
     usage: /<command> [create]
     aliases: [autocraft, ac]
+  
+  item:
+    description: Create and manage custom items (Admin only)
+    usage: /<command> <create|give|list> [args]
+    permission: boxpvp.admin
+    aliases: [customitem, ci]
+  
+  npc:
+    description: Create NPC traders (Admin only)
+    usage: /<command> create <name>
+    permission: boxpvp.admin
+    aliases: [trader, npcs]
 
 permissions:
   boxpvp.admin:

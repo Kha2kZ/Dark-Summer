@@ -2,7 +2,12 @@ package com.boxpvp.core;
 
 import com.boxpvp.core.commands.*;
 import com.boxpvp.core.data.*;
+import com.boxpvp.core.items.CustomItemManager;
+import com.boxpvp.core.trade.NPCTradeManager;
+import com.boxpvp.core.kits.StarterKitManager;
 import com.boxpvp.core.listeners.PlayerListener;
+import com.boxpvp.core.listeners.NPCTradeListener;
+import com.boxpvp.core.listeners.StarterKitListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -18,6 +23,9 @@ public class BoxPvPCore extends JavaPlugin {
     private RankManager rankManager;
     private VirtualChestManager virtualChestManager;
     private AutoCraftingManager autoCraftingManager;
+    private CustomItemManager customItemManager;
+    private NPCTradeManager npcTradeManager;
+    private StarterKitManager starterKitManager;
     private Logger logger;
     
     @Override
@@ -37,6 +45,9 @@ public class BoxPvPCore extends JavaPlugin {
         rankManager = new RankManager(this);
         virtualChestManager = new VirtualChestManager(this);
         autoCraftingManager = new AutoCraftingManager(this);
+        customItemManager = new CustomItemManager(this);
+        npcTradeManager = new NPCTradeManager(this);
+        starterKitManager = new StarterKitManager(this);
         
         registerCommands();
         registerListeners();
@@ -90,11 +101,15 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("fly").setExecutor(new FlyCommand(this));
         getCommand("invsee").setExecutor(new InvseeCommand(this));
         getCommand("tuchetao").setExecutor(new TuChetaoCommand(this));
+        getCommand("item").setExecutor(new ItemCommand(this));
+        getCommand("npc").setExecutor(new NPCCommand(this));
     }
     
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new com.boxpvp.core.listeners.MiningListener(this), this);
+        getServer().getPluginManager().registerEvents(new NPCTradeListener(this), this);
+        getServer().getPluginManager().registerEvents(new StarterKitListener(this), this);
     }
     
     public static BoxPvPCore getInstance() {
@@ -131,5 +146,17 @@ public class BoxPvPCore extends JavaPlugin {
     
     public AutoCraftingManager getAutoCraftingManager() {
         return autoCraftingManager;
+    }
+    
+    public CustomItemManager getCustomItemManager() {
+        return customItemManager;
+    }
+    
+    public NPCTradeManager getNPCTradeManager() {
+        return npcTradeManager;
+    }
+    
+    public StarterKitManager getStarterKitManager() {
+        return starterKitManager;
     }
 }
