@@ -154,6 +154,24 @@ autocraft:
 ## Development Notes
 
 ### Recent Changes (Latest Session)
+**November 11, 2025 - GUI Improvements**
+- ✅ **GUI /ah (Auction House)**: 
+  - Đổi title từ "Black Market" thành "Auction - [page/total]"
+  - Di chuyển navigation: Previous (slot 45), Refresh/Sunflower (slot 49), Next (slot 53)
+  - Bỏ currency filter button
+- ✅ **GUI /rank (Rank Shop)**:
+  - Thêm cyan glass pane decoration ở hàng trên cùng
+  - Player head với coin display ở slot 4
+  - Format lại rank info: Giá + Quyền lợi + Đã sở hữu (✓/✗)
+  - Ẩn "Dyed (Vanilla)" và attributes với ItemFlags
+- ✅ **GUI /item create (Custom Items)**:
+  - Thêm Name Tag button cho chat input (slot 16)
+  - Chat listener để nhập tên với color codes (&a, &c, etc.)
+  - Confirmation GUI với green/red stained glass panes
+  - Name tag preview hiển thị tên sẽ áp dụng
+  - Session persistence qua confirmation flow
+
+**Previous Implementation**
 - ✅ Implemented complete 15-tier rank system with Rank enum
 - ✅ Added RankManager with sequential purchase validation
 - ✅ Integrated rank field into PlayerData with persistence
@@ -216,5 +234,6 @@ autocraft:
 - **Dependencies**: Paper API (Spigot compatible)
 
 ---
-**Last Updated**: November 8, 2025  
-**Build Status**: ✅ Compiling Successfully
+**Last Updated**: November 11, 2025  
+**Build Status**: ✅ Compiling Successfully  
+**Latest JAR**: `target/BoxPvPCore-1.0.0.jar` (135KB)
