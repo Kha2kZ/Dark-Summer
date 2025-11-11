@@ -22,7 +22,7 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
     
     private final BoxPvPCore plugin;
     private final AuctionManager auctionManager;
-    private static final String AH_GUI_TITLE = "§8§lBlack Market";
+    private static final String AH_GUI_BASE_TITLE = "§6§lAuction";
     private static final String CONFIRM_GUI_TITLE = "§6§lConfirm Purchase";
     private static final int ITEMS_PER_PAGE = 45;
     
@@ -111,12 +111,16 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
     private void openAuctionHouse(Player player, int page) {
         playerPages.put(player.getUniqueId(), page);
         
-        Inventory inv = Bukkit.createInventory(null, 54, AH_GUI_TITLE);
-        
         CurrencyType filter = playerFilters.getOrDefault(player.getUniqueId(), null);
         List<AuctionListing> listings = filter == null ? 
             auctionManager.getAllListings() : 
             auctionManager.getListingsByType(filter);
+        
+        int totalPages = (int) Math.ceil((double) listings.size() / ITEMS_PER_PAGE);
+        if (totalPages == 0) totalPages = 1;
+        
+        String guiTitle = AH_GUI_BASE_TITLE + " §7- §f[" + (page + 1) + "/" + totalPages + "]";
+        Inventory inv = Bukkit.createInventory(null, 54, guiTitle);
         
         int startIndex = page * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, listings.size());
@@ -130,36 +134,25 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
         if (page > 0) {
             ItemStack prevPage = new ItemStack(Material.ARROW);
             ItemMeta prevMeta = prevPage.getItemMeta();
-            prevMeta.setDisplayName("§e§l< Previous Page");
+            prevMeta.setDisplayName("§e§l◀ Previous Page");
             prevPage.setItemMeta(prevMeta);
-            inv.setItem(48, prevPage);
+            inv.setItem(45, prevPage);
         }
+        
+        ItemStack refreshButton = new ItemStack(Material.SUNFLOWER);
+        ItemMeta refreshMeta = refreshButton.getItemMeta();
+        refreshMeta.setDisplayName("§a§lRefresh Page");
+        refreshMeta.setLore(Arrays.asList("§7Click to refresh listings"));
+        refreshButton.setItemMeta(refreshMeta);
+        inv.setItem(49, refreshButton);
         
         if (endIndex < listings.size()) {
             ItemStack nextPage = new ItemStack(Material.ARROW);
             ItemMeta nextMeta = nextPage.getItemMeta();
-            nextMeta.setDisplayName("§e§lNext Page >");
+            nextMeta.setDisplayName("§e§lNext Page ▶");
             nextPage.setItemMeta(nextMeta);
-            inv.setItem(50, nextPage);
+            inv.setItem(53, nextPage);
         }
-        
-        ItemStack filterButton = new ItemStack(Material.ENDER_CHEST);
-        ItemMeta filterMeta = filterButton.getItemMeta();
-        filterMeta.setDisplayName("§d§lCurrency Filter");
-        String currentFilter = filter == null ? "All" : filter.getDisplayName();
-        filterMeta.setLore(Arrays.asList(
-            "§7Current: §e" + currentFilter,
-            "§7Click to cycle filters"
-        ));
-        filterButton.setItemMeta(filterMeta);
-        inv.setItem(49, filterButton);
-        
-        ItemStack refreshButton = new ItemStack(Material.SUNFLOWER);
-        ItemMeta refreshMeta = refreshButton.getItemMeta();
-        refreshMeta.setDisplayName("§a§lRefresh");
-        refreshMeta.setLore(Arrays.asList("§7Click to refresh listings"));
-        refreshButton.setItemMeta(refreshMeta);
-        inv.setItem(53, refreshButton);
         
         player.openInventory(inv);
     }
@@ -226,12 +219,12 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
         String title = event.getView().getTitle();
         String prefix = plugin.getConfig().getString("messages.prefix", "");
         
-        if (title.equals(AH_GUI_TITLE)) {
+        if (title.startsWith(AH_GUI_BASE_TITLE)) {
             event.setCancelled(true);
             
             int slot = event.getRawSlot();
             
-            if (slot == 48) {
+            if (slot == 45) {
                 int currentPage = playerPages.getOrDefault(player.getUniqueId(), 0);
                 if (currentPage > 0) {
                     openAuctionHouse(player, currentPage - 1);
@@ -239,29 +232,14 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
                 return;
             }
             
-            if (slot == 50) {
-                int currentPage = playerPages.getOrDefault(player.getUniqueId(), 0);
-                openAuctionHouse(player, currentPage + 1);
-                return;
-            }
-            
             if (slot == 49) {
-                CurrencyType currentFilter = playerFilters.get(player.getUniqueId());
-                if (currentFilter == null) {
-                    playerFilters.put(player.getUniqueId(), CurrencyType.MONEY);
-                } else if (currentFilter == CurrencyType.MONEY) {
-                    playerFilters.put(player.getUniqueId(), CurrencyType.GEMS);
-                } else if (currentFilter == CurrencyType.GEMS) {
-                    playerFilters.put(player.getUniqueId(), CurrencyType.COINS);
-                } else {
-                    playerFilters.remove(player.getUniqueId());
-                }
-                openAuctionHouse(player, 0);
+                openAuctionHouse(player, playerPages.getOrDefault(player.getUniqueId(), 0));
                 return;
             }
             
             if (slot == 53) {
-                openAuctionHouse(player, playerPages.getOrDefault(player.getUniqueId(), 0));
+                int currentPage = playerPages.getOrDefault(player.getUniqueId(), 0);
+                openAuctionHouse(player, currentPage + 1);
                 return;
             }
             

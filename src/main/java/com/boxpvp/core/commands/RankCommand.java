@@ -49,6 +49,25 @@ public class RankCommand implements CommandExecutor, Listener {
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
         Rank currentRank = data.getRank();
         
+        for (int i = 0; i < 9; i++) {
+            ItemStack glassPane = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
+            ItemMeta glassMeta = glassPane.getItemMeta();
+            glassMeta.setDisplayName(" ");
+            glassPane.setItemMeta(glassMeta);
+            gui.setItem(i, glassPane);
+        }
+        
+        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        org.bukkit.inventory.meta.SkullMeta skullMeta = (org.bukkit.inventory.meta.SkullMeta) playerHead.getItemMeta();
+        skullMeta.setOwningPlayer(player);
+        skullMeta.setDisplayName("§e§l" + player.getName());
+        List<String> headLore = new ArrayList<>();
+        headLore.add("§7Current Rank: " + currentRank.getDisplayName());
+        headLore.add("§7Coins: §6" + String.format("%.0f", data.getCoins()));
+        skullMeta.setLore(headLore);
+        playerHead.setItemMeta(skullMeta);
+        gui.setItem(4, playerHead);
+        
         int[] slots = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29};
         int index = 0;
         
@@ -62,18 +81,6 @@ public class RankCommand implements CommandExecutor, Listener {
             index++;
         }
         
-        ItemStack info = new ItemStack(Material.BOOK);
-        ItemMeta infoMeta = info.getItemMeta();
-        infoMeta.setDisplayName("§e§lYour Current Rank");
-        List<String> infoLore = new ArrayList<>();
-        infoLore.add("§7Current: " + currentRank.getDisplayName());
-        infoLore.add("§7Coins: §e" + data.getCoins());
-        infoLore.add("");
-        infoLore.add("§7Click ranks to purchase!");
-        infoMeta.setLore(infoLore);
-        info.setItemMeta(infoMeta);
-        gui.setItem(49, info);
-        
         player.openInventory(gui);
     }
     
@@ -85,44 +92,51 @@ public class RankCommand implements CommandExecutor, Listener {
         meta.setDisplayName(rank.getDisplayName());
         
         List<String> lore = new ArrayList<>();
+        lore.add("");
+        lore.add("§7Giá: §e" + String.format("%.0f", rank.getPrice()) + " Coins");
+        lore.add("§7Quyền lợi:");
+        lore.add("§7- " + rank.getMaxVaults() + " Virtual Chests");
+        lore.add("§7- Mining x" + String.format("%.0f", rank.getMiningMultiplier()));
+        lore.add("§7- " + rank.getMaxAuctionListings() + " Auction Listings");
         
-        if (currentRank.ordinal() >= rank.ordinal()) {
-            lore.add("§a§l✓ UNLOCKED");
-        } else if (currentRank.ordinal() + 1 == rank.ordinal()) {
-            lore.add("§e§lAVAILABLE TO PURCHASE");
-            lore.add("§7Price: §e" + rank.getPrice() + " Coins");
-            if (playerCoins >= rank.getPrice()) {
-                lore.add("§a§l✓ You can afford this!");
-            } else {
-                lore.add("§c§l✗ You need " + (rank.getPrice() - playerCoins) + " more coins");
-            }
-        } else {
-            lore.add("§c§lLOCKED");
-            lore.add("§7Unlock previous ranks first!");
+        if (rank.canUseNick()) {
+            lore.add("§7- /nick command");
+        }
+        if (rank.canUseFeed()) {
+            lore.add("§7- /feed command");
+        }
+        if (rank.canUseHeal()) {
+            lore.add("§7- /heal command");
+        }
+        if (rank.canUseFly()) {
+            lore.add("§7- /fly command");
+        }
+        if (rank.canUseAutoCraft()) {
+            lore.add("§7- /tuchetao (" + rank.getAutoCraftCooldown() + "s cooldown)");
         }
         
         lore.add("");
-        lore.add("§6§lPerks:");
-        lore.add("§7• Vaults: §e" + rank.getMaxVaults());
-        lore.add("§7• Mining Multiplier: §ex" + rank.getMiningMultiplier());
-        lore.add("§7• Auction Listings: §e" + rank.getMaxAuctionListings());
         
-        if (rank.canUseNick()) {
-            lore.add("§7• §a/nick command");
-        }
-        if (rank.canUseFeed()) {
-            lore.add("§7• §a/feed command");
-        }
-        if (rank.canUseHeal()) {
-            lore.add("§7• §a/heal command");
-        }
-        if (rank.canUseFly()) {
-            lore.add("§7• §a/fly command");
-        }
-        if (rank.canUseAutoCraft()) {
-            lore.add("§7• §a/tuchetao §7(cooldown: " + rank.getAutoCraftCooldown() + "s)");
+        if (currentRank.ordinal() >= rank.ordinal()) {
+            lore.add("§aĐã sở hữu: §l✓");
+        } else if (currentRank.ordinal() + 1 == rank.ordinal()) {
+            if (playerCoins >= rank.getPrice()) {
+                lore.add("§aĐã sở hữu: §c§l✗");
+                lore.add("");
+                lore.add("§e§lClick để mua!");
+            } else {
+                lore.add("§aĐã sở hữu: §c§l✗");
+                lore.add("");
+                lore.add("§cThiếu " + String.format("%.0f", (rank.getPrice() - playerCoins)) + " coins");
+            }
+        } else {
+            lore.add("§aĐã sở hữu: §c§l✗");
+            lore.add("");
+            lore.add("§cMua rank trước đó!");
         }
         
+        meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_DYE);
         meta.setLore(lore);
         item.setItemMeta(meta);
         

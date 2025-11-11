@@ -3,6 +3,7 @@ package com.boxpvp.core.commands;
 import com.boxpvp.core.BoxPvPCore;
 import com.boxpvp.core.items.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,11 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +28,9 @@ public class ItemCommand implements CommandExecutor, Listener {
     
     private final BoxPvPCore plugin;
     private static final String GUI_TITLE = "§6§lCreate Custom Item";
+    private static final String CONFIRM_TITLE = "§a§lConfirm Item Name";
     private final Map<UUID, ItemCreationSession> sessions = new HashMap<>();
+    private final Map<UUID, ItemCreationSession> pendingNameInput = new HashMap<>();
 
     public ItemCommand(BoxPvPCore plugin) {
         this.plugin = plugin;
@@ -81,10 +86,14 @@ public class ItemCommand implements CommandExecutor, Listener {
     }
 
     private void openCreationGUI(Player player, String type) {
-        Inventory gui = Bukkit.createInventory(null, 54, GUI_TITLE);
-
         ItemCreationSession session = new ItemCreationSession();
         session.type = type;
+        sessions.put(player.getUniqueId(), session);
+        openCreationGUIWithSession(player, session);
+    }
+    
+    private void openCreationGUIWithSession(Player player, ItemCreationSession session) {
+        Inventory gui = Bukkit.createInventory(null, 54, GUI_TITLE);
         sessions.put(player.getUniqueId(), session);
 
         ItemStack materialIcon = new ItemStack(Material.DIAMOND_PICKAXE);
@@ -122,6 +131,16 @@ public class ItemCommand implements CommandExecutor, Listener {
         fortuneIcon.setItemMeta(fortMeta);
         gui.setItem(32, fortuneIcon);
 
+        ItemStack nameIcon = new ItemStack(Material.NAME_TAG);
+        ItemMeta nameMeta = nameIcon.getItemMeta();
+        nameMeta.setDisplayName("§e§lSet Item Name & Color");
+        nameMeta.setLore(Arrays.asList(
+            "§7Click to set custom name",
+            "§7Use &a, &c, &b etc. for colors"
+        ));
+        nameIcon.setItemMeta(nameMeta);
+        gui.setItem(16, nameIcon);
+        
         ItemStack confirmIcon = new ItemStack(Material.EMERALD_BLOCK);
         ItemMeta confirmMeta = confirmIcon.getItemMeta();
         confirmMeta.setDisplayName("§a§lCREATE ITEM");
@@ -208,10 +227,140 @@ public class ItemCommand implements CommandExecutor, Listener {
                 session.stats.setFortune(session.stats.getFortune() + 10);
             }
             updateGUIItem(event.getInventory(), 32, "§e§lFortune: " + session.stats.getFortune());
+        } else if (slot == 16) {
+            player.closeInventory();
+            pendingNameInput.put(player.getUniqueId(), session);
+            player.sendMessage("§e§l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            player.sendMessage("§6§lItem Name Setup");
+            player.sendMessage("§7Type the item name and color in chat.");
+            player.sendMessage("§7Use §e& §7for color codes (e.g., §e&a&lSuper Pickaxe§7)");
+            player.sendMessage("§7Type §ccancel §7to abort.");
+            player.sendMessage("§e§l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         } else if (slot == 49) {
+            if (session.customName == null || session.customName.isEmpty()) {
+                player.sendMessage("§cPlease set item name first! (Click the Name Tag)");
+                return;
+            }
             createCustomItem(player, session);
             player.closeInventory();
             sessions.remove(player.getUniqueId());
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        
+        if (!pendingNameInput.containsKey(player.getUniqueId())) {
+            return;
+        }
+        
+        event.setCancelled(true);
+        
+        String input = event.getMessage();
+        
+        if (input.equalsIgnoreCase("cancel")) {
+            pendingNameInput.remove(player.getUniqueId());
+            player.sendMessage("§cItem creation cancelled.");
+            return;
+        }
+        
+        ItemCreationSession session = pendingNameInput.get(player.getUniqueId());
+        String coloredName = ChatColor.translateAlternateColorCodes('&', input);
+        session.customName = coloredName;
+        
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            openConfirmNameGUI(player, session, coloredName);
+        });
+        
+        pendingNameInput.remove(player.getUniqueId());
+    }
+    
+    private void openConfirmNameGUI(Player player, ItemCreationSession session, String itemName) {
+        Inventory gui = Bukkit.createInventory(null, 27, CONFIRM_TITLE);
+        
+        for (int i = 0; i < 27; i++) {
+            if (i < 10 || i == 13 || i == 16 || i >= 17) {
+                ItemStack redGlass = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+                ItemMeta redMeta = redGlass.getItemMeta();
+                redMeta.setDisplayName("§c§lCancel");
+                redMeta.setLore(Arrays.asList("§7Click to go back"));
+                redGlass.setItemMeta(redMeta);
+                gui.setItem(i, redGlass);
+            }
+        }
+        
+        for (int i = 10; i <= 12; i++) {
+            ItemStack greenGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+            ItemMeta greenMeta = greenGlass.getItemMeta();
+            greenMeta.setDisplayName("§a§lConfirm");
+            greenMeta.setLore(Arrays.asList("§7Click to confirm this name"));
+            greenGlass.setItemMeta(greenMeta);
+            gui.setItem(i, greenGlass);
+        }
+        
+        for (int i = 14; i <= 15; i++) {
+            ItemStack greenGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+            ItemMeta greenMeta = greenGlass.getItemMeta();
+            greenMeta.setDisplayName("§a§lConfirm");
+            greenMeta.setLore(Arrays.asList("§7Click to confirm this name"));
+            greenGlass.setItemMeta(greenMeta);
+            gui.setItem(i, greenGlass);
+        }
+        
+        ItemStack nameTag = new ItemStack(Material.NAME_TAG);
+        ItemMeta tagMeta = nameTag.getItemMeta();
+        tagMeta.setDisplayName(itemName);
+        tagMeta.setLore(Arrays.asList(
+            "",
+            "§7This will be the item's name",
+            "§7Click §agreen §7to confirm",
+            "§7Click §cred §7to cancel"
+        ));
+        nameTag.setItemMeta(tagMeta);
+        gui.setItem(13, nameTag);
+        
+        sessions.put(player.getUniqueId(), session);
+        player.openInventory(gui);
+    }
+    
+    @EventHandler
+    public void onConfirmNameClick(InventoryClickEvent event) {
+        if (!event.getView().getTitle().equals(CONFIRM_TITLE)) {
+            return;
+        }
+        
+        event.setCancelled(true);
+        
+        if (!(event.getWhoClicked() instanceof Player)) {
+            return;
+        }
+        
+        Player player = (Player) event.getWhoClicked();
+        ItemStack clicked = event.getCurrentItem();
+        
+        if (clicked == null || clicked.getType() == Material.AIR) {
+            return;
+        }
+        
+        ItemCreationSession session = sessions.get(player.getUniqueId());
+        if (session == null) {
+            return;
+        }
+        
+        if (clicked.getType() == Material.LIME_STAINED_GLASS_PANE) {
+            player.closeInventory();
+            player.sendMessage("§aItem name confirmed: " + session.customName);
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                openCreationGUIWithSession(player, session);
+            });
+        } else if (clicked.getType() == Material.RED_STAINED_GLASS_PANE) {
+            session.customName = null;
+            player.closeInventory();
+            player.sendMessage("§cName cancelled. Returning to creation menu.");
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                openCreationGUIWithSession(player, session);
+            });
         }
     }
 
@@ -226,7 +375,7 @@ public class ItemCommand implements CommandExecutor, Listener {
 
     private void createCustomItem(Player player, ItemCreationSession session) {
         String id = "custom_" + System.currentTimeMillis();
-        String displayName = session.type + " Item";
+        String displayName = session.customName != null ? session.customName : session.type + " Item";
 
         Material material = Material.DIAMOND_PICKAXE;
 
@@ -241,6 +390,7 @@ public class ItemCommand implements CommandExecutor, Listener {
 
     private static class ItemCreationSession {
         String type = "tool";
+        String customName = null;
         ItemLevel level = ItemLevel.I;
         ItemRarity rarity = ItemRarity.COMMON;
         CustomItemStats stats = new CustomItemStats();
