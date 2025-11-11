@@ -36,34 +36,32 @@ src/main/java/com/boxpvp/core/
     └── MiningListener.java       # Mining multiplier system
 ```
 
-## Rank System (15 Tiers)
+## Rank System (11 Purchasable Ranks)
 
 ### Purchasable Ranks (Sequential Progression)
-| Rank | Price | Color | Vaults | Mining | AH Listings | Special Perks |
-|------|-------|-------|--------|--------|-------------|---------------|
-| **MEMBER** | 0 | Gray | 1 | x1 | 2 | - |
-| **VIP** | 100,000 | Green | 2 | x2 | 3 | /invsee |
-| **MVP** | 250,000 | Aqua | 3 | x5 | 4 | /nick, /feed |
-| **MVP+** | 500,000 | Gold | 5 | x10 | 5 | /heal |
-| **SUPER** | 1,000,000 | Yellow | 7 | x15 | 6 | /tuchetao (120s cooldown) |
-| **SUPER+** | 2,000,000 | Light Purple | 9 | x20 | 7 | 90s cooldown |
-| **EXTREME** | 5,000,000 | Red | 12 | x25 | 8 | Death penalty immunity |
-| **EXTREME+** | 10,000,000 | Dark Red | 15 | x30 | 9 | 60s cooldown |
-| **DARK** | 25,000,000 | Dark Gray | 18 | x35 | 10 | /fly, 45s cooldown |
-| **RICHKID** | 50,000,000 | Pink | 22 | x40 | 12 | RGB nicknames, 30s cooldown |
-| **RICHKID+** | 100,000,000 | Gold | 26 | x50 | 14 | 20s cooldown |
-| **INFINITE** | 250,000,000 | Blue | 30 | x60 | 16 | +25 coins/kill, 10s cooldown |
-| **INFINITE+** | 500,000,000 | Dark Blue | 35 | x70 | 18 | +50 coins/kill, +1 gem/kill, 5s cooldown |
-| **OWNER** | 1,000,000,000 | Dark Red | 40 | x70 | 20 | +100 coins/kill, +2 gems/kill, 1s cooldown |
+*Note: 1 coin = 1,000 VNĐ*
 
-### Staff Ranks (Overlay System)
-| Rank | Price | Display | Function |
-|------|-------|---------|----------|
-| **HELPER** | 50,000,000 | Light Blue | Staff commands, keeps base rank perks |
-| **POLICE** | 100,000,000 | Dark Blue | Enhanced staff tools, keeps base rank perks |
+| Rank | Price (Coins) | Price (VNĐ) | Color | Vaults | Mining | AH Listings | Special Perks |
+|------|---------------|-------------|-------|--------|--------|-------------|---------------|
+| **MEMBER** | 0 | Free | Gray | 1 | x1 | 0 | - |
+| **VIP** | 20 | 20K | Yellow | 2 | x2 | 2 | /invsee |
+| **VIP+** | 50 | 50K | Green | 3 | x3 | 3 | - |
+| **MVP** | 100 | 100K | Aqua | 5 | x5 | 5 | /nick, /feed |
+| **MVP+** | 200 | 200K | Dark Aqua | 7 | x7 | 7 | /heal, /tuchetao (120s) |
+| **RICHKID** | 300 | 300K | Pink | 10 | x15 | 10 | RGB nicknames, 60s cooldown |
+| **DARK** | 400 | 400K | Dark Blue | 20 | x20 | 15 | /fly, 30s cooldown |
+| **HEAVEN** | 500 | 500K | White+Yellow | 35 | x25 | 20 | +10K coins/kill, +10 gems/kill, 20s cooldown |
+| **INFINITE** | 700 | 700K | Red+Blue | 40 | x30 | 30 | +10K coins/kill, +10 gems/kill, 10s cooldown |
+| **EXTREME** | 850 | 850K | Red+Gold | 40 | x50 | 30 | Death penalty immunity, +10K coins/kill, +10 gems/kill, 5s cooldown |
+| **CUSTOM** | 1,000 | 1 triệu | Red | 40 | x70 | 30 | +50K coins/kill, +50 gems/kill, 1s cooldown |
 
-### Special Rank
-- **CUSTOM**: User-defined rank name and color (10,000,000 coins)
+### Staff Ranks (Not Purchasable)
+| Rank | Display | Vaults | Mining | Function |
+|------|---------|--------|--------|----------|
+| **HELPER** | Pink | 40 | x70 | Staff commands |
+| **POLICE** | Red+Purple | 40 | x70 | Enhanced staff tools |
+| **ADMIN** | Dark Red+Aqua | 40 | x100 | Full admin powers |
+| **OWNER** | Gradient 4-color | 40 | x1000 | Server owner |
 
 ## Key Features
 
