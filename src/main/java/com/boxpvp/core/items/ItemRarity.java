@@ -42,24 +42,3 @@ public enum ItemRarity {
         }
     }
 }
-package com.boxpvp.core.items;
-
-public enum ItemRarity {
-    COMMON("§fCommon"),
-    UNCOMMON("§aUncommon"),
-    RARE("§9Rare"),
-    EPIC("§5Epic"),
-    LEGENDARY("§6Legendary"),
-    MYTHIC("§dMythic"),
-    SSR("§c§lSSR");
-    
-    private final String display;
-    
-    ItemRarity(String display) {
-        this.display = display;
-    }
-    
-    public String getDisplay() {
-        return display;
-    }
-}
