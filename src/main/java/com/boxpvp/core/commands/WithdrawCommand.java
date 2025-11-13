@@ -60,7 +60,7 @@ public class WithdrawCommand implements CommandExecutor {
         }
         
         data.removeMoney(amount);
-        plugin.getPlayerDataManager().savePlayerData(player);
+        plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
         
         ItemStack voucher = new ItemStack(Material.PAPER);
         ItemMeta meta = voucher.getItemMeta();

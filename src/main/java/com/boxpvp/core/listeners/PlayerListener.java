@@ -20,28 +20,27 @@ public class PlayerListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayerDataManager().loadPlayerData(player);
 
         // Set tab list name with rank prefix
-        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
+        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         Rank rank = data.getRank();
-        player.setPlayerListName(rank.getColor() + "[" + rank.getDisplayName() + "]§r " + player.getName());
+        player.setPlayerListName(rank.getColor() + "[" + rank.getDisplayName() + "] §f" + player.getName());
 
         String prefix = plugin.getConfig().getString("messages.prefix", "");
         event.setJoinMessage(prefix + "§e" + player.getName() + " §ahas joined the server!");
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
+        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         Rank rank = data.getRank();
 
-        String format = rank.getColor() + "[" + rank.getDisplayName() + "]§r " + player.getName() + "§f: " + event.getMessage();
-        event.setFormat(format);
+        event.setFormat(rank.getColor() + "[" + rank.getDisplayName() + "] §f" + player.getName() + " §8» §f" + event.getMessage());
     }
 
     @EventHandler
@@ -56,7 +55,7 @@ public class PlayerListener implements Listener {
         Player victim = event.getEntity();
         Player killer = victim.getKiller();
 
-        PlayerData victimData = plugin.getPlayerDataManager().getPlayerData(victim);
+        PlayerData victimData = plugin.getPlayerDataManager().getPlayerData(victim.getUniqueId());
         Rank victimRank = victimData.getRank();
         victimData.addDeath();
 
@@ -80,7 +79,7 @@ public class PlayerListener implements Listener {
         }
 
         if (killer != null && killer != victim) {
-            PlayerData killerData = plugin.getPlayerDataManager().getPlayerData(killer);
+            PlayerData killerData = plugin.getPlayerDataManager().getPlayerData(killer.getUniqueId());
             Rank killerRank = killerData.getRank();
             killerData.addKill();
 

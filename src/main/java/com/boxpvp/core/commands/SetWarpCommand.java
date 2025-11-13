@@ -22,9 +22,9 @@ public class SetWarpCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        String prefix = plugin.getConfig().getString("messages.prefix", "");
 
         if (!player.hasPermission("boxpvp.admin")) {
-            String prefix = plugin.getConfig().getString("messages.prefix", "");
             String message = plugin.getConfig().getString("messages.no-permission", "§cYou don't have permission!");
             player.sendMessage(prefix + message);
             return true;
@@ -38,8 +38,7 @@ public class SetWarpCommand implements CommandExecutor {
         String warpName = args[0].toLowerCase();
 
         plugin.getWarpManager().setWarp(warpName, player.getLocation());
-
-        String prefix = plugin.getConfig().getString("messages.prefix", "");
+        
         player.sendMessage(prefix + "§aWarp '§e" + warpName + "§a' has been set!");
 
         return true;
