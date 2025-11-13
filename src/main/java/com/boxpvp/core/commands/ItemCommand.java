@@ -121,10 +121,10 @@ public class ItemCommand implements CommandExecutor, Listener {
             "Level: " + session.stats.getFortune(), session.stats.getFortune() > 0));
         
         inv.setItem(28, createConfigButton(Material.EXPERIENCE_BOTTLE, "§e§lLevel", 
-            session.level.getDisplay(), true));
+            session.level.getRomanNumeral(), true));
         
         inv.setItem(30, createConfigButton(Material.NETHER_STAR, "§e§lRarity", 
-            session.rarity.getDisplay(), true));
+            session.rarity.getDisplayName(), true));
 
         // Preview button
         ItemStack preview = new ItemStack(Material.CHEST);
@@ -164,10 +164,10 @@ public class ItemCommand implements CommandExecutor, Listener {
             session.weaponSpeed + " APS", session.weaponSpeed > 0));
         
         inv.setItem(28, createConfigButton(Material.EXPERIENCE_BOTTLE, "§e§lLevel", 
-            session.level.getDisplay(), true));
+            session.level.getRomanNumeral(), true));
         
         inv.setItem(30, createConfigButton(Material.NETHER_STAR, "§e§lRarity", 
-            session.rarity.getDisplay(), true));
+            session.rarity.getDisplayName(), true));
 
         // Preview button
         ItemStack preview = new ItemStack(Material.CHEST);
@@ -316,7 +316,7 @@ public class ItemCommand implements CommandExecutor, Listener {
         player.sendMessage("§eEnter item name (use & for colors, &# for RGB like &#FF5733):");
         player.sendMessage("§7Type 'cancel' to cancel");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new StringPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -345,7 +345,7 @@ public class ItemCommand implements CommandExecutor, Listener {
             .thatExcludesNonPlayersWithMessage("")
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void promptForMaterial(Player player, ItemCreationSession session) {
@@ -353,7 +353,7 @@ public class ItemCommand implements CommandExecutor, Listener {
         player.sendMessage("§eEnter material (e.g., DIAMOND_SWORD, IRON_PICKAXE):");
         player.sendMessage("§7Type 'cancel' to cancel");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new StringPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -386,14 +386,14 @@ public class ItemCommand implements CommandExecutor, Listener {
             .withTimeout(60)
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void promptForEfficiency(Player player, ItemCreationSession session) {
         player.closeInventory();
         player.sendMessage("§eEnter efficiency level (1-10):");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new NumericPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -410,14 +410,14 @@ public class ItemCommand implements CommandExecutor, Listener {
             .withLocalEcho(false)
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void promptForFortune(Player player, ItemCreationSession session) {
         player.closeInventory();
         player.sendMessage("§eEnter fortune level (1-10):");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new NumericPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -434,14 +434,14 @@ public class ItemCommand implements CommandExecutor, Listener {
             .withLocalEcho(false)
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void promptForDamage(Player player, ItemCreationSession session) {
         player.closeInventory();
         player.sendMessage("§eEnter damage (1-100):");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new NumericPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -458,14 +458,14 @@ public class ItemCommand implements CommandExecutor, Listener {
             .withLocalEcho(false)
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void promptForAttackSpeed(Player player, ItemCreationSession session) {
         player.closeInventory();
         player.sendMessage("§eEnter attack speed (1-20, vanilla is 4):");
         
-        ConversationFactory factory = new ConversationFactory(plugin)
+        Conversation conversation = new ConversationFactory(plugin)
             .withFirstPrompt(new NumericPrompt() {
                 @Override
                 public String getPromptText(ConversationContext context) {
@@ -482,7 +482,7 @@ public class ItemCommand implements CommandExecutor, Listener {
             .withLocalEcho(false)
             .buildConversation(player);
         
-        factory.begin();
+        conversation.begin();
     }
 
     private void cycleLevel(ItemCreationSession session) {

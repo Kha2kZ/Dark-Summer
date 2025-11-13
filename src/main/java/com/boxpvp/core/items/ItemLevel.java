@@ -44,6 +44,10 @@ public enum ItemLevel {
         return Component.text(name()).color(color);
     }
 
+    public Component getDisplay() {
+        return getColoredComponent();
+    }
+
     public static ItemLevel fromLevel(int level) {
         for (ItemLevel itemLevel : values()) {
             if (itemLevel.level == level) {

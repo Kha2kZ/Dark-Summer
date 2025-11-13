@@ -23,7 +23,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        plugin.getPlayerDataManager().loadPlayerData(player);
+        plugin.getPlayerDataManager().loadPlayerData(player.getUniqueId());
 
         // Set tab list name with rank prefix
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());

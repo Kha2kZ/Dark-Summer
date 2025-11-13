@@ -41,7 +41,7 @@ public class PlayerDataManager {
         return data;
     }
 
-    private PlayerData loadPlayerData(UUID uuid) {
+    public PlayerData loadPlayerData(UUID uuid) {
         File file = new File(dataFolder, uuid.toString() + ".yml");
 
         if (!file.exists()) {

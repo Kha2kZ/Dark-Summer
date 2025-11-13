@@ -34,6 +34,10 @@ public enum ItemRarity {
         return Component.text(displayName).color(color);
     }
 
+    public Component getDisplay() {
+        return getColoredComponent();
+    }
+
     public static ItemRarity fromString(String name) {
         try {
             return valueOf(name.toUpperCase());

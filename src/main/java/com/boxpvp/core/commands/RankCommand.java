@@ -184,7 +184,7 @@ public class RankCommand implements CommandExecutor, Listener {
                     } else if (data.getCoins() >= rank.getPrice()) {
                         data.removeCoins(rank.getPrice());
                         data.setRank(rank);
-                        plugin.getPlayerDataManager().savePlayerData(player);
+                        plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
                         player.sendMessage(prefix + "§aĐã mua rank " + rank.getColor() + rank.getDisplayName() + "§a thành công!");
                         player.closeInventory();
                     } else {
