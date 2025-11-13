@@ -1,0 +1,602 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.boxpvp:BoxPvPCore >------------------------
+[INFO] Building BoxPvPCore 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ BoxPvPCore ---
+[INFO] Deleting /home/runner/workspace/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ BoxPvPCore ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ BoxPvPCore ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 57 source files with javac [debug target 17] to target/classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/VirtualChestManager.java: Some input files use or override a deprecated API.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/VirtualChestManager.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/AutoCraftingManager.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/AutoCraftingManager.java: Recompile with -Xlint:unchecked for details.
+[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] system modules path not set in conjunction with -source 17
+[INFO] 1 warning
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerData.java:[5,8] duplicate class: com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[48,20] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+  required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+  found:    java.util.UUID,int
+  reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[62,16] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+  required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+  found:    java.util.UUID,int,int,double,double,double,long,com.boxpvp.core.data.Rank,java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[73,35] cannot find symbol
+  symbol:   method getBalance()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[75,33] cannot find symbol
+  symbol:   method getCoins()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[76,38] cannot find symbol
+  symbol:   method getLastLogin()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[78,36] cannot find symbol
+  symbol:   method getNickname()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[76,20] cannot find symbol
+  symbol:   method getCoins()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[85,13] cannot find symbol
+  symbol:   method removeCoins(double)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[86,13] cannot find symbol
+  symbol:   method setRank(com.boxpvp.core.data.Rank)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[99,13] cannot find symbol
+  symbol:   method setRank(com.boxpvp.core.data.Rank)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[49,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[181,21] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[187,70] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[124,26] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[127,27] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[167,26] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[170,27] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[346,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[348,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[387,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[389,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[411,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[413,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[435,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[437,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[459,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[461,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[483,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[485,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[531,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[532,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[565,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[566,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[603,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[604,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[37,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[26,54] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[40,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[58,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[82,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[341,9] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[378,13] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[394,13] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[81,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[39,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[47,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[68,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[48,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[56,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[57,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[63,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[INFO] 64 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.233 s
+[INFO] Finished at: 2025-11-13T12:08:09Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project BoxPvPCore: Compilation failure: Compilation failure: 
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerData.java:[5,8] duplicate class: com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[48,20] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+[ERROR]   required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+[ERROR]   found:    java.util.UUID,int
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[62,16] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+[ERROR]   required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+[ERROR]   found:    java.util.UUID,int,int,double,double,double,long,com.boxpvp.core.data.Rank,java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[73,35] cannot find symbol
+[ERROR]   symbol:   method getBalance()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[75,33] cannot find symbol
+[ERROR]   symbol:   method getCoins()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[76,38] cannot find symbol
+[ERROR]   symbol:   method getLastLogin()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[78,36] cannot find symbol
+[ERROR]   symbol:   method getNickname()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[76,20] cannot find symbol
+[ERROR]   symbol:   method getCoins()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[85,13] cannot find symbol
+[ERROR]   symbol:   method removeCoins(double)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[86,13] cannot find symbol
+[ERROR]   symbol:   method setRank(com.boxpvp.core.data.Rank)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[99,13] cannot find symbol
+[ERROR]   symbol:   method setRank(com.boxpvp.core.data.Rank)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[49,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[181,21] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[187,70] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[124,26] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[127,27] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[167,26] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[170,27] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[346,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[348,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[387,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[389,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[411,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[413,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[435,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[437,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[459,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[461,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[483,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[485,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[531,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[532,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[565,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[566,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[603,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[604,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[37,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[26,54] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[40,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[58,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[82,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[341,9] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[378,13] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[394,13] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[81,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[39,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[47,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[68,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[48,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[56,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[57,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[63,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.boxpvp:BoxPvPCore >------------------------
+[INFO] Building BoxPvPCore 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ BoxPvPCore ---
+[INFO] Deleting /home/runner/workspace/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ BoxPvPCore ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ BoxPvPCore ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 57 source files with javac [debug target 17] to target/classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/VirtualChestManager.java: Some input files use or override a deprecated API.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/VirtualChestManager.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/AutoCraftingManager.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/runner/workspace/src/main/java/com/boxpvp/core/data/AutoCraftingManager.java: Recompile with -Xlint:unchecked for details.
+[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] system modules path not set in conjunction with -source 17
+[INFO] 1 warning
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerData.java:[5,8] duplicate class: com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[48,20] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+  required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+  found:    java.util.UUID,int
+  reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[62,16] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+  required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+  found:    java.util.UUID,int,int,double,double,double,long,com.boxpvp.core.data.Rank,java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[73,35] cannot find symbol
+  symbol:   method getBalance()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[75,33] cannot find symbol
+  symbol:   method getCoins()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[76,38] cannot find symbol
+  symbol:   method getLastLogin()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[78,36] cannot find symbol
+  symbol:   method getNickname()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[76,20] cannot find symbol
+  symbol:   method getCoins()
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[85,13] cannot find symbol
+  symbol:   method removeCoins(double)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[86,13] cannot find symbol
+  symbol:   method setRank(com.boxpvp.core.data.Rank)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[99,13] cannot find symbol
+  symbol:   method setRank(com.boxpvp.core.data.Rank)
+  location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[49,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[181,21] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[187,70] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[124,26] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[127,27] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[167,26] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[170,27] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[346,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[348,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[387,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[389,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[411,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[413,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[435,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[437,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[459,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[461,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[483,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[485,16] cannot find symbol
+  symbol:   method begin()
+  location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[531,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[532,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[565,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[566,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[603,40] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[604,32] cannot find symbol
+  symbol:   method getDisplay()
+  location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[37,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[26,54] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[40,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[58,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[82,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[341,9] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[378,13] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[394,13] cannot find symbol
+  symbol:   class PlayerData
+  location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[81,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[39,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[47,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[68,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[48,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[56,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[57,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[63,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[INFO] 64 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.233 s
+[INFO] Finished at: 2025-11-13T12:08:09Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project BoxPvPCore: Compilation failure: Compilation failure: 
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerData.java:[5,8] duplicate class: com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[5,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[4,28] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/MoneyCommand.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[48,20] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+[ERROR]   required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+[ERROR]   found:    java.util.UUID,int
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[62,16] constructor PlayerData in class com.boxpvp.core.data.PlayerData cannot be applied to given types;
+[ERROR]   required: java.lang.String,int,int,int,int,int,int,com.boxpvp.core.data.Rank
+[ERROR]   found:    java.util.UUID,int,int,double,double,double,long,com.boxpvp.core.data.Rank,java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[73,35] cannot find symbol
+[ERROR]   symbol:   method getBalance()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[75,33] cannot find symbol
+[ERROR]   symbol:   method getCoins()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[76,38] cannot find symbol
+[ERROR]   symbol:   method getLastLogin()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/PlayerDataManager.java:[78,36] cannot find symbol
+[ERROR]   symbol:   method getNickname()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[76,20] cannot find symbol
+[ERROR]   symbol:   method getCoins()
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[85,13] cannot find symbol
+[ERROR]   symbol:   method removeCoins(double)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[86,13] cannot find symbol
+[ERROR]   symbol:   method setRank(com.boxpvp.core.data.Rank)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/data/RankManager.java:[99,13] cannot find symbol
+[ERROR]   symbol:   method setRank(com.boxpvp.core.data.Rank)
+[ERROR]   location: variable data of type com.boxpvp.core.data.PlayerData
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[49,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[181,21] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/RankCommand.java:[187,70] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[124,26] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[127,27] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[167,26] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[170,27] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[346,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[348,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[387,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[389,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[411,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[413,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[435,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[437,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[459,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[461,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[483,31] incompatible types: org.bukkit.conversations.Conversation cannot be converted to org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[485,16] cannot find symbol
+[ERROR]   symbol:   method begin()
+[ERROR]   location: variable factory of type org.bukkit.conversations.ConversationFactory
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[531,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[532,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[565,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[566,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[603,40] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable level of type com.boxpvp.core.items.ItemLevel
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/ItemCommand.java:[604,32] cannot find symbol
+[ERROR]   symbol:   method getDisplay()
+[ERROR]   location: variable rarity of type com.boxpvp.core.items.ItemRarity
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/TopCommand.java:[37,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[26,54] incompatible types: org.bukkit.entity.Player cannot be converted to java.util.UUID
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[29,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[40,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[58,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/listeners/PlayerListener.java:[82,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[341,9] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[378,13] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/AuctionHouseCommand.java:[394,13] cannot find symbol
+[ERROR]   symbol:   class PlayerData
+[ERROR]   location: class com.boxpvp.core.commands.AuctionHouseCommand
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiftCodeCommand.java:[81,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/StatsCommand.java:[39,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[47,13] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/NickCommand.java:[68,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/GiveRankCommand.java:[48,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/WithdrawCommand.java:[56,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[57,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] /home/runner/workspace/src/main/java/com/boxpvp/core/commands/PayCommand.java:[63,9] com.boxpvp.core.data.PlayerData is not public in com.boxpvp.core.data; cannot be accessed from outside package
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
