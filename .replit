@@ -45,3 +45,12 @@ args = "git commit -m \"Backup: $(date '+%Y-%m-%d %H:%M:%S')\""
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "git push -u origin main"
+
+[[workflows.workflow]]
+name = "🔄 Auto-Backup (5 phút)"
+author = 49635968
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./auto-backup.sh"
