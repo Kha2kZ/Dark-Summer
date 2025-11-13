@@ -10,101 +10,102 @@ commands:
     description: Teleport to spawn point
     usage: /<command>
     aliases: [hub]
-  
+
   stats:
     description: View your player statistics
     usage: /<command> [player]
     aliases: [statistics]
-  
+
   arena:
     description: Join or manage arena matches
     usage: /<command> [join|leave|list]
     aliases: [pvp, duel]
-  
+
   setspawn:
     description: Set the spawn point (Admin only)
     usage: /<command>
     permission: boxpvp.admin
-  
+
   warp:
     description: Teleport to a warp location (trade, crate, afk)
     usage: /<command> [name]
     aliases: [warps]
-  
+
   setwarp:
     description: Set a warp location (Admin only)
     usage: /<command> <name>
     permission: boxpvp.admin
-  
+
   trade:
     description: Trade items with nearby players
     usage: /<command> <player>
     aliases: [t]
-  
+
   ah:
     description: Access the auction house (black market)
     usage: /<command> [sell <price> <money|gems|coins>]
     aliases: [auctionhouse, blackmarket, market]
-  
+
   giftcode:
     description: Redeem a gift code for rewards
     usage: /<command> <code>
     aliases: [redeem, code]
-  
+
   creategiftcode:
     description: Create a new gift code with rewards (Admin only)
     usage: /<command> <code> <maxuses>
     permission: boxpvp.admin
     aliases: [createcode, makegiftcode]
-  
+
   rank:
     description: Open the rank shop GUI
     usage: /<command>
     aliases: [ranks, rankshop]
-  
+
   pv:
     description: Open your virtual chest
     usage: /<command> <1-40>
     aliases: [vault, chest, backpack]
-  
+
   nick:
     description: Change your nickname
     usage: /<command> <nickname|reset>
     aliases: [nickname]
-  
+
   feed:
     description: Restore your hunger
     usage: /<command>
-  
+
   heal:
     description: Restore your health and hunger
     usage: /<command>
-  
+
   fly:
     description: Toggle fly mode
     usage: /<command>
-  
+
   invsee:
     description: View another player's inventory
     usage: /<command> <player>
     aliases: [inv, inventory]
-  
+
   tuchetao:
     description: Auto-craft items using recipes
     usage: /<command> [create]
     aliases: [autocraft, ac]
-  
+
   item:
     description: Create and manage custom items (Admin only)
     usage: /<command> <create|give|list> [args]
     permission: boxpvp.admin
     aliases: [customitem, ci]
-  
+
   npc:
-    description: Create NPC traders (Admin only)
-    usage: /<command> create <name>
-    permission: boxpvp.admin
-    aliases: [trader, npcs]
+    description: Manage NPCs
+    usage: /<command> <create|delete>
+  money:
+    description: View your balance
+    usage: /<command>
 
 permissions:
   boxpvp.admin:

@@ -1,36 +1,41 @@
+
 package com.boxpvp.core.commands;
 
 import com.boxpvp.core.BoxPvPCore;
-import com.boxpvp.core.items.*;
+import com.boxpvp.core.items.CustomItem;
+import com.boxpvp.core.items.ItemLevel;
+import com.boxpvp.core.items.ItemRarity;
+import com.boxpvp.core.items.ItemStats;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.conversations.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ItemCommand implements CommandExecutor, Listener {
-    
+
     private final BoxPvPCore plugin;
-    private static final String GUI_TITLE = "§6§lCreate Custom Item";
-    private static final String CONFIRM_TITLE = "§a§lConfirm Item Name";
+    private static final String CREATION_GUI_TITLE = "§6§lCreate Custom Item";
+    private static final String PREVIEW_GUI_TITLE = "§e§lItem Preview";
     private final Map<UUID, ItemCreationSession> sessions = new HashMap<>();
-    private final Map<UUID, ItemCreationSession> pendingNameInput = new HashMap<>();
 
     public ItemCommand(BoxPvPCore plugin) {
         this.plugin = plugin;
@@ -46,353 +51,597 @@ public class ItemCommand implements CommandExecutor, Listener {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("boxpvp.admin")) {
-            player.sendMessage("§cYou don't have permission to use this command!");
-            return true;
-        }
-
         if (args.length == 0) {
-            player.sendMessage("§cUsage: /item <create|give|list>");
+            player.sendMessage("§cUsage: /item create");
             return true;
         }
 
-        switch (args[0].toLowerCase()) {
-            case "create":
-                if (args.length < 2) {
-                    player.sendMessage("§cUsage: /item create <tool|weapon|block>");
-                    return true;
-                }
-                openCreationGUI(player, args[1]);
-                break;
-
-            case "give":
-                if (args.length < 3) {
-                    player.sendMessage("§cUsage: /item give <player> <item_id>");
-                    return true;
-                }
-                giveCustomItem(player, args[1], args[2]);
-                break;
-
-            case "list":
-                listCustomItems(player);
-                break;
-
-            default:
-                player.sendMessage("§cUsage: /item <create|give|list>");
-                break;
+        if (args[0].equalsIgnoreCase("create")) {
+            openCreationGUI(player);
+            return true;
         }
 
         return true;
     }
 
-    private void openCreationGUI(Player player, String type) {
+    private void openCreationGUI(Player player) {
         ItemCreationSession session = new ItemCreationSession();
-        session.type = type;
         sessions.put(player.getUniqueId(), session);
         openCreationGUIWithSession(player, session);
     }
-    
+
     private void openCreationGUIWithSession(Player player, ItemCreationSession session) {
-        Inventory gui = Bukkit.createInventory(null, 54, GUI_TITLE);
-        sessions.put(player.getUniqueId(), session);
+        Inventory inv = Bukkit.createInventory(null, 54, CREATION_GUI_TITLE);
 
-        ItemStack materialIcon = new ItemStack(Material.DIAMOND_PICKAXE);
-        ItemMeta materialMeta = materialIcon.getItemMeta();
-        materialMeta.setDisplayName("§e§lSelect Material");
-        materialMeta.setLore(List.of("§7Click to cycle through materials"));
-        materialIcon.setItemMeta(materialMeta);
-        gui.setItem(10, materialIcon);
+        // Top decoration
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta grayMeta = grayPane.getItemMeta();
+        grayMeta.setDisplayName(" ");
+        grayPane.setItemMeta(grayMeta);
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(i, grayPane);
+            inv.setItem(45 + i, grayPane);
+        }
 
-        ItemStack levelIcon = new ItemStack(Material.EXPERIENCE_BOTTLE);
-        ItemMeta levelMeta = levelIcon.getItemMeta();
-        levelMeta.setDisplayName("§b§lLevel: I");
-        levelMeta.setLore(List.of("§7Click to increase level"));
-        levelIcon.setItemMeta(levelMeta);
-        gui.setItem(12, levelIcon);
+        // Item Type Selection
+        ItemStack toolIcon = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemMeta toolMeta = toolIcon.getItemMeta();
+        toolMeta.setDisplayName("§b§lTOOL");
+        toolMeta.setLore(Arrays.asList("§7Create a custom tool", "§7(Pickaxe, Axe, Shovel, Hoe)"));
+        toolIcon.setItemMeta(toolMeta);
+        inv.setItem(20, toolIcon);
 
-        ItemStack rarityIcon = new ItemStack(Material.NETHER_STAR);
-        ItemMeta rarityMeta = rarityIcon.getItemMeta();
-        rarityMeta.setDisplayName("§f§lRarity: Common");
-        rarityMeta.setLore(List.of("§7Click to cycle rarity"));
-        rarityIcon.setItemMeta(rarityMeta);
-        gui.setItem(14, rarityIcon);
+        ItemStack weaponIcon = new ItemStack(Material.DIAMOND_SWORD);
+        ItemMeta weaponMeta = weaponIcon.getItemMeta();
+        weaponMeta.setDisplayName("§c§lWEAPON");
+        weaponMeta.setLore(Arrays.asList("§7Create a custom weapon", "§7(Sword, Axe with combat stats)"));
+        weaponIcon.setItemMeta(weaponMeta);
+        inv.setItem(24, weaponIcon);
 
-        ItemStack efficiencyIcon = new ItemStack(Material.IRON_PICKAXE);
-        ItemMeta effMeta = efficiencyIcon.getItemMeta();
-        effMeta.setDisplayName("§a§lEfficiency: 0");
-        effMeta.setLore(List.of("§7Left click: +1", "§7Right click: +10"));
-        efficiencyIcon.setItemMeta(effMeta);
-        gui.setItem(30, efficiencyIcon);
+        player.openInventory(inv);
+    }
 
-        ItemStack fortuneIcon = new ItemStack(Material.DIAMOND);
-        ItemMeta fortMeta = fortuneIcon.getItemMeta();
-        fortMeta.setDisplayName("§e§lFortune: 0");
-        fortMeta.setLore(List.of("§7Left click: +1", "§7Right click: +10"));
-        fortuneIcon.setItemMeta(fortMeta);
-        gui.setItem(32, fortuneIcon);
+    private void openToolCreationGUI(Player player, ItemCreationSession session) {
+        Inventory inv = Bukkit.createInventory(null, 54, "§b§lCreate Tool");
 
-        ItemStack nameIcon = new ItemStack(Material.NAME_TAG);
-        ItemMeta nameMeta = nameIcon.getItemMeta();
-        nameMeta.setDisplayName("§e§lSet Item Name & Color");
-        nameMeta.setLore(Arrays.asList(
-            "§7Click to set custom name",
-            "§7Use &a, &c, &b etc. for colors"
-        ));
-        nameIcon.setItemMeta(nameMeta);
-        gui.setItem(16, nameIcon);
+        // Decoration
+        addGUIDecoration(inv);
+
+        // Config buttons
+        inv.setItem(10, createConfigButton(Material.NAME_TAG, "§e§lItem Name", 
+            session.customName != null ? session.customName : "§7Not set", session.customName != null));
         
-        ItemStack confirmIcon = new ItemStack(Material.EMERALD_BLOCK);
-        ItemMeta confirmMeta = confirmIcon.getItemMeta();
-        confirmMeta.setDisplayName("§a§lCREATE ITEM");
-        confirmIcon.setItemMeta(confirmMeta);
-        gui.setItem(49, confirmIcon);
+        inv.setItem(12, createConfigButton(Material.PAPER, "§e§lItem Display", 
+            session.displayMaterial != null ? session.displayMaterial.name() : "§7Not set", session.displayMaterial != null));
+        
+        inv.setItem(14, createConfigButton(Material.ENCHANTED_BOOK, "§e§lEfficiency", 
+            "Level: " + session.stats.getEfficiency(), session.stats.getEfficiency() > 0));
+        
+        inv.setItem(16, createConfigButton(Material.EMERALD, "§e§lFortune", 
+            "Level: " + session.stats.getFortune(), session.stats.getFortune() > 0));
+        
+        inv.setItem(28, createConfigButton(Material.EXPERIENCE_BOTTLE, "§e§lLevel", 
+            session.level.getDisplay(), true));
+        
+        inv.setItem(30, createConfigButton(Material.NETHER_STAR, "§e§lRarity", 
+            session.rarity.getDisplay(), true));
 
-        player.openInventory(gui);
+        // Preview button
+        ItemStack preview = new ItemStack(Material.CHEST);
+        ItemMeta previewMeta = preview.getItemMeta();
+        previewMeta.setDisplayName("§a§lPREVIEW ITEM");
+        previewMeta.setLore(Arrays.asList("§7Click to see how your", "§7item will look"));
+        preview.setItemMeta(previewMeta);
+        inv.setItem(34, preview);
+
+        // Create button
+        ItemStack create = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+        ItemMeta createMeta = create.getItemMeta();
+        createMeta.setDisplayName("§a§lCREATE ITEM");
+        create.setItemMeta(createMeta);
+        inv.setItem(49, create);
+
+        player.openInventory(inv);
     }
 
-    private void giveCustomItem(Player sender, String targetName, String itemId) {
-        Player target = Bukkit.getPlayer(targetName);
-        if (target == null) {
-            sender.sendMessage("§cPlayer not found!");
-            return;
-        }
+    private void openWeaponCreationGUI(Player player, ItemCreationSession session) {
+        Inventory inv = Bukkit.createInventory(null, 54, "§c§lCreate Weapon");
 
-        CustomItem customItem = plugin.getCustomItemManager().getItem(itemId);
-        if (customItem == null) {
-            sender.sendMessage("§cCustom item not found!");
-            return;
-        }
+        // Decoration
+        addGUIDecoration(inv);
 
-        target.getInventory().addItem(customItem.build());
-        sender.sendMessage("§aGave " + customItem.getDisplayName() + " §ato " + target.getName());
-        target.sendMessage("§aYou received " + customItem.getDisplayName());
+        // Config buttons
+        inv.setItem(10, createConfigButton(Material.NAME_TAG, "§e§lItem Name", 
+            session.customName != null ? session.customName : "§7Not set", session.customName != null));
+        
+        inv.setItem(12, createConfigButton(Material.PAPER, "§e§lItem Display", 
+            session.displayMaterial != null ? session.displayMaterial.name() : "§7Not set", session.displayMaterial != null));
+        
+        inv.setItem(14, createConfigButton(Material.IRON_SWORD, "§e§lDamage", 
+            "+" + session.weaponDamage + " DMG", session.weaponDamage > 0));
+        
+        inv.setItem(16, createConfigButton(Material.SUGAR, "§e§lAttack Speed", 
+            session.weaponSpeed + " APS", session.weaponSpeed > 0));
+        
+        inv.setItem(28, createConfigButton(Material.EXPERIENCE_BOTTLE, "§e§lLevel", 
+            session.level.getDisplay(), true));
+        
+        inv.setItem(30, createConfigButton(Material.NETHER_STAR, "§e§lRarity", 
+            session.rarity.getDisplay(), true));
+
+        // Preview button
+        ItemStack preview = new ItemStack(Material.CHEST);
+        ItemMeta previewMeta = preview.getItemMeta();
+        previewMeta.setDisplayName("§a§lPREVIEW ITEM");
+        previewMeta.setLore(Arrays.asList("§7Click to see how your", "§7item will look"));
+        preview.setItemMeta(previewMeta);
+        inv.setItem(34, preview);
+
+        // Create button
+        ItemStack create = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+        ItemMeta createMeta = create.getItemMeta();
+        createMeta.setDisplayName("§a§lCREATE WEAPON");
+        create.setItemMeta(createMeta);
+        inv.setItem(49, create);
+
+        player.openInventory(inv);
     }
 
-    private void listCustomItems(Player player) {
-        player.sendMessage("§6§l=== Custom Items ===");
-        for (String id : plugin.getCustomItemManager().getItemIds()) {
-            CustomItem item = plugin.getCustomItemManager().getItem(id);
-            player.sendMessage("§e" + id + " §7- " + item.getDisplayName());
+    private void addGUIDecoration(Inventory inv) {
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta grayMeta = grayPane.getItemMeta();
+        grayMeta.setDisplayName(" ");
+        grayPane.setItemMeta(grayMeta);
+        
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(i, grayPane);
+            inv.setItem(45 + i, grayPane);
         }
+    }
+
+    private ItemStack createConfigButton(Material material, String name, String value, boolean configured) {
+        ItemStack item = new ItemStack(configured ? Material.LIME_STAINED_GLASS_PANE : Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(Arrays.asList("§7Current: §f" + value, "", "§eClick to configure"));
+        item.setItemMeta(meta);
+        
+        // Display icon
+        ItemStack icon = new ItemStack(material);
+        return icon;
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!event.getView().getTitle().equals(GUI_TITLE)) {
-            return;
-        }
-
-        event.setCancelled(true);
-
-        if (!(event.getWhoClicked() instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) event.getWhoClicked();
-        ItemStack clicked = event.getCurrentItem();
-
-        if (clicked == null || clicked.getType() == Material.AIR) {
-            return;
-        }
-
-        ItemCreationSession session = sessions.get(player.getUniqueId());
-        if (session == null) {
-            return;
-        }
-
-        int slot = event.getSlot();
-
-        if (slot == 12) {
-            int currentLevel = session.level.getLevel();
-            currentLevel = (currentLevel % 15) + 1;
-            session.level = ItemLevel.fromLevel(currentLevel);
-            updateGUIItem(event.getInventory(), 12, "§b§lLevel: " + session.level.getRomanNumeral());
-        } else if (slot == 14) {
-            ItemRarity[] rarities = ItemRarity.values();
-            int currentIndex = session.rarity.ordinal();
-            currentIndex = (currentIndex + 1) % rarities.length;
-            session.rarity = rarities[currentIndex];
-            updateGUIItem(event.getInventory(), 14, "§f§lRarity: " + session.rarity.getDisplayName());
-        } else if (slot == 30) {
-            if (event.isLeftClick()) {
-                session.stats.setEfficiency(session.stats.getEfficiency() + 1);
-            } else if (event.isRightClick()) {
-                session.stats.setEfficiency(session.stats.getEfficiency() + 10);
-            }
-            updateGUIItem(event.getInventory(), 30, "§a§lEfficiency: " + session.stats.getEfficiency());
-        } else if (slot == 32) {
-            if (event.isLeftClick()) {
-                session.stats.setFortune(session.stats.getFortune() + 1);
-            } else if (event.isRightClick()) {
-                session.stats.setFortune(session.stats.getFortune() + 10);
-            }
-            updateGUIItem(event.getInventory(), 32, "§e§lFortune: " + session.stats.getFortune());
-        } else if (slot == 16) {
-            player.closeInventory();
-            pendingNameInput.put(player.getUniqueId(), session);
-            player.sendMessage("§e§l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            player.sendMessage("§6§lItem Name Setup");
-            player.sendMessage("§7Type the item name and color in chat.");
-            player.sendMessage("§7Use §e& §7for color codes (e.g., §e&a&lSuper Pickaxe§7)");
-            player.sendMessage("§7Type §ccancel §7to abort.");
-            player.sendMessage("§e§l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        } else if (slot == 49) {
-            if (session.customName == null || session.customName.isEmpty()) {
-                player.sendMessage("§cPlease set item name first! (Click the Name Tag)");
-                return;
-            }
-            createCustomItem(player, session);
-            player.closeInventory();
-            sessions.remove(player.getUniqueId());
-        }
-    }
-    
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-        
-        if (!pendingNameInput.containsKey(player.getUniqueId())) {
-            return;
-        }
-        
-        event.setCancelled(true);
-        
-        String input = event.getMessage();
-        
-        if (input.equalsIgnoreCase("cancel")) {
-            pendingNameInput.remove(player.getUniqueId());
-            player.sendMessage("§cItem creation cancelled.");
-            return;
-        }
-        
-        ItemCreationSession session = pendingNameInput.get(player.getUniqueId());
-        String coloredName = ChatColor.translateAlternateColorCodes('&', input);
-        session.customName = coloredName;
-        
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            openConfirmNameGUI(player, session, coloredName);
-        });
-        
-        pendingNameInput.remove(player.getUniqueId());
-    }
-    
-    private void openConfirmNameGUI(Player player, ItemCreationSession session, String itemName) {
-        Inventory gui = Bukkit.createInventory(null, 27, CONFIRM_TITLE);
-        
-        for (int i = 0; i < 27; i++) {
-            if (i < 10 || i == 13 || i == 16 || i >= 17) {
-                ItemStack redGlass = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-                ItemMeta redMeta = redGlass.getItemMeta();
-                redMeta.setDisplayName("§c§lCancel");
-                redMeta.setLore(Arrays.asList("§7Click to go back"));
-                redGlass.setItemMeta(redMeta);
-                gui.setItem(i, redGlass);
-            }
-        }
-        
-        for (int i = 10; i <= 12; i++) {
-            ItemStack greenGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-            ItemMeta greenMeta = greenGlass.getItemMeta();
-            greenMeta.setDisplayName("§a§lConfirm");
-            greenMeta.setLore(Arrays.asList("§7Click to confirm this name"));
-            greenGlass.setItemMeta(greenMeta);
-            gui.setItem(i, greenGlass);
-        }
-        
-        for (int i = 14; i <= 15; i++) {
-            ItemStack greenGlass = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-            ItemMeta greenMeta = greenGlass.getItemMeta();
-            greenMeta.setDisplayName("§a§lConfirm");
-            greenMeta.setLore(Arrays.asList("§7Click to confirm this name"));
-            greenGlass.setItemMeta(greenMeta);
-            gui.setItem(i, greenGlass);
-        }
-        
-        ItemStack nameTag = new ItemStack(Material.NAME_TAG);
-        ItemMeta tagMeta = nameTag.getItemMeta();
-        tagMeta.setDisplayName(itemName);
-        tagMeta.setLore(Arrays.asList(
-            "",
-            "§7This will be the item's name",
-            "§7Click §agreen §7to confirm",
-            "§7Click §cred §7to cancel"
-        ));
-        nameTag.setItemMeta(tagMeta);
-        gui.setItem(13, nameTag);
-        
-        sessions.put(player.getUniqueId(), session);
-        player.openInventory(gui);
-    }
-    
-    @EventHandler
-    public void onConfirmNameClick(InventoryClickEvent event) {
-        if (!event.getView().getTitle().equals(CONFIRM_TITLE)) {
-            return;
-        }
-        
-        event.setCancelled(true);
-        
-        if (!(event.getWhoClicked() instanceof Player)) {
-            return;
-        }
+        if (!(event.getWhoClicked() instanceof Player)) return;
         
         Player player = (Player) event.getWhoClicked();
-        ItemStack clicked = event.getCurrentItem();
+        String title = event.getView().getTitle();
         
-        if (clicked == null || clicked.getType() == Material.AIR) {
-            return;
+        if (title.equals(CREATION_GUI_TITLE)) {
+            event.setCancelled(true);
+            ItemCreationSession session = sessions.get(player.getUniqueId());
+            if (session == null) return;
+            
+            int slot = event.getRawSlot();
+            
+            if (slot == 20) { // Tool
+                session.itemType = "tool";
+                openToolCreationGUI(player, session);
+            } else if (slot == 24) { // Weapon
+                session.itemType = "weapon";
+                openWeaponCreationGUI(player, session);
+            }
+        } else if (title.equals("§b§lCreate Tool")) {
+            event.setCancelled(true);
+            handleToolGUIClick(player, event.getRawSlot());
+        } else if (title.equals("§c§lCreate Weapon")) {
+            event.setCancelled(true);
+            handleWeaponGUIClick(player, event.getRawSlot());
+        } else if (title.equals(PREVIEW_GUI_TITLE)) {
+            event.setCancelled(true);
         }
-        
+    }
+
+    private void handleToolGUIClick(Player player, int slot) {
         ItemCreationSession session = sessions.get(player.getUniqueId());
-        if (session == null) {
-            return;
+        if (session == null) return;
+        
+        switch (slot) {
+            case 10: // Name
+                promptForName(player, session);
+                break;
+            case 12: // Display Material
+                promptForMaterial(player, session);
+                break;
+            case 14: // Efficiency
+                promptForEfficiency(player, session);
+                break;
+            case 16: // Fortune
+                promptForFortune(player, session);
+                break;
+            case 28: // Level
+                cycleLevel(session);
+                openToolCreationGUI(player, session);
+                break;
+            case 30: // Rarity
+                cycleRarity(session);
+                openToolCreationGUI(player, session);
+                break;
+            case 34: // Preview
+                showPreview(player, session, false);
+                break;
+            case 49: // Create
+                createCustomTool(player, session);
+                break;
+        }
+    }
+
+    private void handleWeaponGUIClick(Player player, int slot) {
+        ItemCreationSession session = sessions.get(player.getUniqueId());
+        if (session == null) return;
+        
+        switch (slot) {
+            case 10: // Name
+                promptForName(player, session);
+                break;
+            case 12: // Display Material
+                promptForMaterial(player, session);
+                break;
+            case 14: // Damage
+                promptForDamage(player, session);
+                break;
+            case 16: // Attack Speed
+                promptForAttackSpeed(player, session);
+                break;
+            case 28: // Level
+                cycleLevel(session);
+                openWeaponCreationGUI(player, session);
+                break;
+            case 30: // Rarity
+                cycleRarity(session);
+                openWeaponCreationGUI(player, session);
+                break;
+            case 34: // Preview
+                showPreview(player, session, true);
+                break;
+            case 49: // Create
+                createCustomWeapon(player, session);
+                break;
+        }
+    }
+
+    private void promptForName(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter item name (use & for colors, &# for RGB like &#FF5733):");
+        player.sendMessage("§7Type 'cancel' to cancel");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new StringPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                public Prompt acceptInput(ConversationContext context, String input) {
+                    if (input.equalsIgnoreCase("cancel")) {
+                        return Prompt.END_OF_CONVERSATION;
+                    }
+                    
+                    session.customName = translateColorCodes(input);
+                    Bukkit.getScheduler().runTask(plugin, () -> {
+                        if (session.itemType.equals("tool")) {
+                            openToolCreationGUI(player, session);
+                        } else {
+                            openWeaponCreationGUI(player, session);
+                        }
+                    });
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .withTimeout(60)
+            .thatExcludesNonPlayersWithMessage("")
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void promptForMaterial(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter material (e.g., DIAMOND_SWORD, IRON_PICKAXE):");
+        player.sendMessage("§7Type 'cancel' to cancel");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new StringPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                public Prompt acceptInput(ConversationContext context, String input) {
+                    if (input.equalsIgnoreCase("cancel")) {
+                        return Prompt.END_OF_CONVERSATION;
+                    }
+                    
+                    try {
+                        session.displayMaterial = Material.valueOf(input.toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        player.sendMessage("§cInvalid material!");
+                    }
+                    
+                    Bukkit.getScheduler().runTask(plugin, () -> {
+                        if (session.itemType.equals("tool")) {
+                            openToolCreationGUI(player, session);
+                        } else {
+                            openWeaponCreationGUI(player, session);
+                        }
+                    });
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .withTimeout(60)
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void promptForEfficiency(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter efficiency level (1-10):");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new NumericPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
+                    session.stats.setEfficiency(Math.max(0, Math.min(10, input.intValue())));
+                    Bukkit.getScheduler().runTask(plugin, () -> openToolCreationGUI(player, session));
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void promptForFortune(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter fortune level (1-10):");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new NumericPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
+                    session.stats.setFortune(Math.max(0, Math.min(10, input.intValue())));
+                    Bukkit.getScheduler().runTask(plugin, () -> openToolCreationGUI(player, session));
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void promptForDamage(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter damage (1-100):");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new NumericPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
+                    session.weaponDamage = Math.max(1, Math.min(100, input.doubleValue()));
+                    Bukkit.getScheduler().runTask(plugin, () -> openWeaponCreationGUI(player, session));
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void promptForAttackSpeed(Player player, ItemCreationSession session) {
+        player.closeInventory();
+        player.sendMessage("§eEnter attack speed (1-20, vanilla is 4):");
+        
+        ConversationFactory factory = new ConversationFactory(plugin)
+            .withFirstPrompt(new NumericPrompt() {
+                @Override
+                public String getPromptText(ConversationContext context) {
+                    return "";
+                }
+                
+                @Override
+                protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
+                    session.weaponSpeed = Math.max(1, Math.min(20, input.doubleValue()));
+                    Bukkit.getScheduler().runTask(plugin, () -> openWeaponCreationGUI(player, session));
+                    return Prompt.END_OF_CONVERSATION;
+                }
+            })
+            .withLocalEcho(false)
+            .buildConversation(player);
+        
+        factory.begin();
+    }
+
+    private void cycleLevel(ItemCreationSession session) {
+        ItemLevel[] levels = ItemLevel.values();
+        int current = session.level.ordinal();
+        session.level = levels[(current + 1) % levels.length];
+    }
+
+    private void cycleRarity(ItemCreationSession session) {
+        ItemRarity[] rarities = ItemRarity.values();
+        int current = session.rarity.ordinal();
+        session.rarity = rarities[(current + 1) % rarities.length];
+    }
+
+    private void showPreview(Player player, ItemCreationSession session, boolean isWeapon) {
+        Inventory preview = Bukkit.createInventory(null, 27, PREVIEW_GUI_TITLE);
+        
+        ItemStack previewItem = buildPreviewItem(session, isWeapon);
+        preview.setItem(13, previewItem);
+        
+        player.openInventory(preview);
+    }
+
+    private ItemStack buildPreviewItem(ItemCreationSession session, boolean isWeapon) {
+        Material mat = session.displayMaterial != null ? session.displayMaterial : 
+                      (isWeapon ? Material.DIAMOND_SWORD : Material.DIAMOND_PICKAXE);
+        ItemStack item = new ItemStack(mat);
+        ItemMeta meta = item.getItemMeta();
+        
+        String name = session.customName != null ? session.customName : "§fCustom Item";
+        meta.setDisplayName(name);
+        
+        List<String> lore = new ArrayList<>();
+        if (isWeapon) {
+            lore.add("§7Damage: §c+" + session.weaponDamage);
+            lore.add("§7Attack Speed: §e" + session.weaponSpeed);
+        } else {
+            if (session.stats.getEfficiency() > 0) {
+                lore.add("§7Efficiency: §b" + romanNumeral(session.stats.getEfficiency()));
+            }
+            if (session.stats.getFortune() > 0) {
+                lore.add("§7Fortune: §a" + romanNumeral(session.stats.getFortune()));
+            }
+        }
+        lore.add("");
+        lore.add("§6§l" + session.level.getDisplay());
+        lore.add(session.rarity.getDisplay() + " §l" + session.rarity.name());
+        
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        
+        return item;
+    }
+
+    private void createCustomTool(Player player, ItemCreationSession session) {
+        Material mat = session.displayMaterial != null ? session.displayMaterial : Material.DIAMOND_PICKAXE;
+        ItemStack tool = new ItemStack(mat);
+        ItemMeta meta = tool.getItemMeta();
+        
+        String name = session.customName != null ? session.customName : "§fCustom Tool";
+        meta.setDisplayName(name);
+        
+        // Apply enchantments that ACTUALLY work
+        if (session.stats.getEfficiency() > 0) {
+            meta.addEnchant(Enchantment.DIG_SPEED, session.stats.getEfficiency(), true);
+        }
+        if (session.stats.getFortune() > 0) {
+            meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, session.stats.getFortune(), true);
         }
         
-        if (clicked.getType() == Material.LIME_STAINED_GLASS_PANE) {
-            player.closeInventory();
-            player.sendMessage("§aItem name confirmed: " + session.customName);
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                openCreationGUIWithSession(player, session);
-            });
-        } else if (clicked.getType() == Material.RED_STAINED_GLASS_PANE) {
-            session.customName = null;
-            player.closeInventory();
-            player.sendMessage("§cName cancelled. Returning to creation menu.");
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                openCreationGUIWithSession(player, session);
-            });
+        List<String> lore = new ArrayList<>();
+        if (session.stats.getEfficiency() > 0) {
+            lore.add("§7Efficiency: §b" + romanNumeral(session.stats.getEfficiency()));
         }
+        if (session.stats.getFortune() > 0) {
+            lore.add("§7Fortune: §a" + romanNumeral(session.stats.getFortune()));
+        }
+        lore.add("");
+        lore.add("§6§l" + session.level.getDisplay());
+        lore.add(session.rarity.getDisplay() + " §l" + session.rarity.name());
+        
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        tool.setItemMeta(meta);
+        
+        player.getInventory().addItem(tool);
+        player.sendMessage("§aCreated custom tool: " + name);
+        player.closeInventory();
+        sessions.remove(player.getUniqueId());
     }
 
-    private void updateGUIItem(Inventory inv, int slot, String newName) {
-        ItemStack item = inv.getItem(slot);
-        if (item != null) {
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(newName);
-            item.setItemMeta(meta);
-        }
+    private void createCustomWeapon(Player player, ItemCreationSession session) {
+        Material mat = session.displayMaterial != null ? session.displayMaterial : Material.DIAMOND_SWORD;
+        ItemStack weapon = new ItemStack(mat);
+        ItemMeta meta = weapon.getItemMeta();
+        
+        String name = session.customName != null ? session.customName : "§fCustom Weapon";
+        meta.setDisplayName(name);
+        
+        // Apply attribute modifiers that ACTUALLY work
+        AttributeModifier damageModifier = new AttributeModifier(
+            UUID.randomUUID(), "generic.attackDamage", 
+            session.weaponDamage - 1, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND
+        );
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageModifier);
+        
+        AttributeModifier speedModifier = new AttributeModifier(
+            UUID.randomUUID(), "generic.attackSpeed", 
+            session.weaponSpeed - 4, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND
+        );
+        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
+        
+        List<String> lore = new ArrayList<>();
+        lore.add("§7Damage: §c+" + session.weaponDamage);
+        lore.add("§7Attack Speed: §e" + session.weaponSpeed);
+        lore.add("");
+        lore.add("§6§l" + session.level.getDisplay());
+        lore.add(session.rarity.getDisplay() + " §l" + session.rarity.name());
+        
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        weapon.setItemMeta(meta);
+        
+        player.getInventory().addItem(weapon);
+        player.sendMessage("§aCreated custom weapon: " + name);
+        player.closeInventory();
+        sessions.remove(player.getUniqueId());
     }
 
-    private void createCustomItem(Player player, ItemCreationSession session) {
-        String id = "custom_" + System.currentTimeMillis();
-        String displayName = session.customName != null ? session.customName : session.type + " Item";
+    private String translateColorCodes(String text) {
+        // Support &#RRGGBB format
+        Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
+        Matcher matcher = hexPattern.matcher(text);
+        StringBuffer buffer = new StringBuffer();
+        
+        while (matcher.find()) {
+            String hex = matcher.group(1);
+            matcher.appendReplacement(buffer, ChatColor.of("#" + hex).toString());
+        }
+        matcher.appendTail(buffer);
+        
+        // Support traditional & codes
+        return ChatColor.translateAlternateColorCodes('&', buffer.toString());
+    }
 
-        Material material = Material.DIAMOND_PICKAXE;
-
-        CustomItem customItem = new CustomItem(plugin, id, displayName, material, 
-            session.level, session.rarity, session.stats);
-
-        plugin.getCustomItemManager().registerItem(customItem);
-
-        player.getInventory().addItem(customItem.build());
-        player.sendMessage("§aCreated custom item: " + displayName);
+    private String romanNumeral(int num) {
+        String[] romans = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+        return num > 0 && num <= 10 ? romans[num - 1] : String.valueOf(num);
     }
 
     private static class ItemCreationSession {
-        String type = "tool";
-        String customName = null;
+        String itemType = "tool";
+        String customName;
+        Material displayMaterial;
         ItemLevel level = ItemLevel.I;
         ItemRarity rarity = ItemRarity.COMMON;
-        CustomItemStats stats = new CustomItemStats();
+        ItemStats stats = new ItemStats();
+        double weaponDamage = 7.0;
+        double weaponSpeed = 4.0;
     }
 }

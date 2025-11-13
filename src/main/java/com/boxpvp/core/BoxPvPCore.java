@@ -103,6 +103,7 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("tuchetao").setExecutor(new TuChetaoCommand(this));
         getCommand("item").setExecutor(new ItemCommand(this));
         getCommand("npc").setExecutor(new NPCCommand(this));
+        getCommand("money").setExecutor(new MoneyCommand(this));
     }
     
     private void registerListeners() {
