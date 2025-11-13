@@ -28,3 +28,20 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "mvn clean package"
+
+[[workflows.workflow]]
+name = "💾 Backup to GitHub"
+author = 49635968
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git add ."
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git commit -m \"Backup: $(date '+%Y-%m-%d %H:%M:%S')\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git push -u origin main"
