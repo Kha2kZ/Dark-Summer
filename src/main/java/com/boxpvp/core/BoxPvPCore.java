@@ -104,6 +104,12 @@ public class BoxPvPCore extends JavaPlugin {
         getCommand("item").setExecutor(new ItemCommand(this));
         getCommand("npc").setExecutor(new NPCCommand(this));
         getCommand("money").setExecutor(new MoneyCommand(this));
+        getCommand("giverank").setExecutor(new GiveRankCommand(this));
+        getCommand("pay").setExecutor(new PayCommand(this));
+        getCommand("top").setExecutor(new TopCommand(this));
+        getCommand("pvview").setExecutor(new PvViewCommand(this));
+        getCommand("withdraw").setExecutor(new WithdrawCommand(this));
+        getCommand("banghoi").setExecutor(new BangHoiCommand(this));
     }
     
     private void registerListeners() {

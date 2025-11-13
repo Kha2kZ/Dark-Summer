@@ -180,11 +180,15 @@ public class RankCommand implements CommandExecutor, Listener {
                 } else {
                     PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
                     if (data.getRank().ordinal() >= rank.ordinal()) {
-                        player.sendMessage(prefix + "§cYou already have this rank or higher!");
-                    } else if (data.getRank().ordinal() + 1 != rank.ordinal()) {
-                        player.sendMessage(prefix + "§cYou must purchase the previous rank first!");
+                        player.sendMessage(prefix + "§cBạn đã có rank này hoặc cao hơn!");
+                    } else if (data.getCoins() >= rank.getPrice()) {
+                        data.removeCoins(rank.getPrice());
+                        data.setRank(rank);
+                        plugin.getPlayerDataManager().savePlayerData(player);
+                        player.sendMessage(prefix + "§aĐã mua rank " + rank.getColor() + rank.getDisplayName() + "§a thành công!");
+                        player.closeInventory();
                     } else {
-                        player.sendMessage(prefix + "§cYou don't have enough coins!");
+                        player.sendMessage(prefix + "§cBạn không đủ coins!");
                     }
                 }
                 break;

@@ -107,6 +107,33 @@ commands:
     description: View your balance
     usage: /<command>
 
+  giverank:
+    description: Give a rank to a player (Admin only)
+    usage: /<command> <player> <rank>
+    permission: boxpvp.admin
+
+  pay:
+    description: Transfer money to another player
+    usage: /<command> <player> <amount>
+
+  top:
+    description: View top players by money/gems/coins
+    usage: /<command> <money|gem|coin>
+
+  pvview:
+    description: View another player's vault (Admin only)
+    usage: /<command> <player> <number>
+    permission: boxpvp.admin
+
+  withdraw:
+    description: Withdraw money as a voucher item
+    usage: /<command> <money> <amount>
+
+  banghoi:
+    description: Guild management system
+    usage: /<command> <create|disband|list|chat>
+    aliases: [guild, clan]
+
 permissions:
   boxpvp.admin:
     description: Access to admin commands
