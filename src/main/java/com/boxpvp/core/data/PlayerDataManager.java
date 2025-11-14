@@ -59,6 +59,9 @@ public class PlayerDataManager {
         Rank rank = Rank.fromString(config.getString("rank", "MEMBER"));
         String nickname = config.getString("nickname", null);
 
+        long lastAutoCraftTime = config.getLong("lastAutoCraftTime", 0);
+
+
         return new PlayerData(uuid, kills, deaths, balance, gems, coins, lastLogin, rank, nickname);
     }
 
@@ -76,6 +79,7 @@ public class PlayerDataManager {
         config.set("last-login", data.getLastLogin());
         config.set("rank", data.getRank().name());
         config.set("nickname", data.getNickname());
+        config.set("lastAutoCraftTime", data.getLastAutoCraftTime());
 
         try {
             config.save(file);

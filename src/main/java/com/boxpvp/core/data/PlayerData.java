@@ -152,6 +152,16 @@ public class PlayerData {
     public boolean hasNickname() {
         return nickname != null && !nickname.isEmpty();
     }
+    
+    private long lastAutoCraftTime = 0;
+    
+    public long getLastAutoCraftTime() {
+        return lastAutoCraftTime;
+    }
+    
+    public void setLastAutoCraftTime(long time) {
+        this.lastAutoCraftTime = time;
+    }
 
     public double getMoney() {
         return this.balance;

@@ -88,6 +88,10 @@ public class NickCommand implements CommandExecutor {
         }
         matcher.appendTail(buffer);
         
+        // Also translate legacy color codes (&a, &c, etc.)
+        return org.bukkit.ChatColor.translateAlternateColorCodes('&', buffer.toString());
+    }buffer);
+        
         return org.bukkit.ChatColor.translateAlternateColorCodes('&', buffer.toString());
     }
 }
