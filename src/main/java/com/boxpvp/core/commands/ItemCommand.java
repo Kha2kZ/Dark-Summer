@@ -3,6 +3,7 @@ package com.boxpvp.core.commands;
 
 import com.boxpvp.core.BoxPvPCore;
 import com.boxpvp.core.items.CustomItem;
+import com.boxpvp.core.items.CustomItemStats;
 import com.boxpvp.core.items.ItemLevel;
 import com.boxpvp.core.items.ItemRarity;
 import com.boxpvp.core.items.ItemStats;
@@ -200,15 +201,12 @@ public class ItemCommand implements CommandExecutor, Listener {
     }
 
     private ItemStack createConfigButton(Material material, String name, String value, boolean configured) {
-        ItemStack item = new ItemStack(configured ? Material.LIME_STAINED_GLASS_PANE : Material.GRAY_STAINED_GLASS_PANE);
+        ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
         meta.setLore(Arrays.asList("§7Current: §f" + value, "", "§eClick to configure"));
         item.setItemMeta(meta);
-        
-        // Display icon
-        ItemStack icon = new ItemStack(material);
-        return icon;
+        return item;
     }
 
     @EventHandler
@@ -540,13 +538,15 @@ public class ItemCommand implements CommandExecutor, Listener {
 
     private void createCustomTool(Player player, ItemCreationSession session) {
         Material mat = session.displayMaterial != null ? session.displayMaterial : Material.DIAMOND_PICKAXE;
-        ItemStack tool = new ItemStack(mat);
+        String name = session.customName != null ? session.customName : "§fCustom Tool";
+        String id = "custom_tool_" + UUID.randomUUID().toString();
+        
+        CustomItemStats stats = new CustomItemStats(session.stats.getEfficiency(), session.stats.getFortune(), 0, 0);
+        CustomItem customItem = new CustomItem(plugin, id, name, mat, session.level, session.rarity, stats);
+        ItemStack tool = customItem.build();
+        
         ItemMeta meta = tool.getItemMeta();
         
-        String name = session.customName != null ? session.customName : "§fCustom Tool";
-        meta.setDisplayName(name);
-        
-        // Apply enchantments that ACTUALLY work
         if (session.stats.getEfficiency() > 0) {
             meta.addEnchant(Enchantment.DIG_SPEED, session.stats.getEfficiency(), true);
         }
@@ -554,19 +554,6 @@ public class ItemCommand implements CommandExecutor, Listener {
             meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, session.stats.getFortune(), true);
         }
         
-        List<String> lore = new ArrayList<>();
-        if (session.stats.getEfficiency() > 0) {
-            lore.add("§7Efficiency: §b" + romanNumeral(session.stats.getEfficiency()));
-        }
-        if (session.stats.getFortune() > 0) {
-            lore.add("§7Fortune: §a" + romanNumeral(session.stats.getFortune()));
-        }
-        lore.add("");
-        lore.add("§6§l" + session.level.getDisplay());
-        lore.add(session.rarity.getDisplay() + " §l" + session.rarity.name());
-        
-        meta.setLore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         tool.setItemMeta(meta);
         
         player.getInventory().addItem(tool);
@@ -577,13 +564,15 @@ public class ItemCommand implements CommandExecutor, Listener {
 
     private void createCustomWeapon(Player player, ItemCreationSession session) {
         Material mat = session.displayMaterial != null ? session.displayMaterial : Material.DIAMOND_SWORD;
-        ItemStack weapon = new ItemStack(mat);
+        String name = session.customName != null ? session.customName : "§fCustom Weapon";
+        String id = "custom_weapon_" + UUID.randomUUID().toString();
+        
+        CustomItemStats stats = new CustomItemStats(0, 0, session.weaponDamage, session.weaponSpeed);
+        CustomItem customItem = new CustomItem(plugin, id, name, mat, session.level, session.rarity, stats);
+        ItemStack weapon = customItem.build();
+        
         ItemMeta meta = weapon.getItemMeta();
         
-        String name = session.customName != null ? session.customName : "§fCustom Weapon";
-        meta.setDisplayName(name);
-        
-        // Apply attribute modifiers that ACTUALLY work
         AttributeModifier damageModifier = new AttributeModifier(
             UUID.randomUUID(), "generic.attackDamage", 
             session.weaponDamage - 1, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND
@@ -596,15 +585,6 @@ public class ItemCommand implements CommandExecutor, Listener {
         );
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
         
-        List<String> lore = new ArrayList<>();
-        lore.add("§7Damage: §c+" + session.weaponDamage);
-        lore.add("§7Attack Speed: §e" + session.weaponSpeed);
-        lore.add("");
-        lore.add("§6§l" + session.level.getDisplay());
-        lore.add(session.rarity.getDisplay() + " §l" + session.rarity.name());
-        
-        meta.setLore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         weapon.setItemMeta(meta);
         
         player.getInventory().addItem(weapon);

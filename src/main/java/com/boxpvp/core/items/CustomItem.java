@@ -2,6 +2,7 @@ package com.boxpvp.core.items;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
@@ -38,21 +39,38 @@ public class CustomItem {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         
-        meta.displayName(Component.text(displayName).decoration(TextDecoration.ITALIC, false));
+        Component nameComponent = LegacyComponentSerializer.legacySection().deserialize(displayName);
+        meta.displayName(nameComponent.decoration(TextDecoration.ITALIC, false));
         
         List<Component> lore = new ArrayList<>();
         
+        if (stats.hasDamage()) {
+            lore.add(Component.text("Damage: ", net.kyori.adventure.text.format.NamedTextColor.GRAY)
+                .append(Component.text("+" + stats.getDamage(), net.kyori.adventure.text.format.NamedTextColor.RED))
+                .decoration(TextDecoration.ITALIC, false));
+        }
+        
+        if (stats.hasAttackSpeed()) {
+            lore.add(Component.text("Attack Speed: ", net.kyori.adventure.text.format.NamedTextColor.GRAY)
+                .append(Component.text(stats.getAttackSpeed(), net.kyori.adventure.text.format.NamedTextColor.GOLD))
+                .decoration(TextDecoration.ITALIC, false));
+        }
+        
         if (stats.hasEfficiency()) {
-            lore.add(Component.text("⛏ Efficiency " + stats.getEfficiency()).decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.text("⛏ Efficiency " + stats.getEfficiency(), net.kyori.adventure.text.format.NamedTextColor.AQUA)
+                .decoration(TextDecoration.ITALIC, false));
         }
         
         if (stats.hasFortune()) {
-            lore.add(Component.text("💎 Fortune " + stats.getFortune()).decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.text("💎 Fortune " + stats.getFortune(), net.kyori.adventure.text.format.NamedTextColor.GREEN)
+                .decoration(TextDecoration.ITALIC, false));
         }
         
         lore.add(Component.text(""));
-        lore.add(level.getColoredComponent().decoration(TextDecoration.ITALIC, false));
-        lore.add(Component.text("PHẨM CHẤT ").append(rarity.getColoredComponent()).decoration(TextDecoration.ITALIC, false));
+        lore.add(level.getColoredComponent().decoration(TextDecoration.ITALIC, false).decoration(TextDecoration.BOLD, true));
+        lore.add(Component.text("PHẨM CHẤT ", net.kyori.adventure.text.format.NamedTextColor.GRAY)
+            .append(rarity.getColoredComponent().decoration(TextDecoration.BOLD, true))
+            .decoration(TextDecoration.ITALIC, false));
         
         meta.lore(lore);
         
