@@ -69,13 +69,13 @@ public class TuChetaoCommand implements CommandExecutor, Listener {
             return true;
         }
 
-        if (!rank.canAutocraft()) {
+        if (!rank.canUseAutoCraft()) {
             player.sendMessage(prefix + "§cBạn cần ít nhất rank MVP+ để dùng lệnh này!");
             return true;
         }
 
         // Check persistent cooldown
-        if (autoCraftingManager.isOnCooldown(player)) {
+        if (!autoCraftingManager.canCraft(player)) {
             long remaining = autoCraftingManager.getRemainingCooldown(player);
             player.sendMessage(prefix + "§cVui lòng đợi " + remaining + " giây trước khi dùng lại!");
             return true;
