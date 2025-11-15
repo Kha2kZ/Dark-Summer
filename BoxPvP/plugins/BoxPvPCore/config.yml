@@ -1,0 +1,42 @@
+# BoxPvPCore Configuration
+
+# Spawn settings
+spawn:
+  world: world
+  x: 0.0
+  y: 64.0
+  z: 0.0
+  yaw: 0.0
+  pitch: 0.0
+
+# Economy settings
+economy:
+  starting-balance: 100
+  kill-reward: 50
+  death-penalty: 25
+
+# Arena settings
+arena:
+  enabled: true
+  min-players: 2
+  max-players: 10
+  countdown-time: 10
+
+# Shop settings
+shop:
+  enabled: true
+  gui-title: "§6§lBox PvP Shop"
+
+# Safe zones (no PvP regions)
+safe-zones:
+  - spawn
+  - shop
+
+# Messages
+messages:
+  prefix: "§8[§6BoxPvP§8]§r "
+  spawn-teleport: "§aTeleported to spawn!"
+  spawn-set: "§aSpawn point has been set!"
+  no-permission: "§cYou don't have permission to do that!"
+  player-not-found: "§cPlayer not found!"
+  insufficient-funds: "§cYou don't have enough money!"
