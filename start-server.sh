@@ -3,6 +3,12 @@
 
 echo "=== BoxPvP Server Startup ==="
 
+# Change to BoxPvP directory
+cd BoxPvP || {
+    echo "ERROR: BoxPvP folder not found!"
+    exit 1
+}
+
 # Download Paper if not exists
 if [ ! -f "paper.jar" ]; then
     echo "Downloading Paper 1.20.1..."
@@ -20,10 +26,10 @@ fi
 # Create plugins folder
 mkdir -p plugins
 
-# Copy built plugin to plugins folder
-if [ -f "target/BoxPvPCore-1.0.0.jar" ]; then
+# Copy built plugin from parent directory
+if [ -f "../target/BoxPvPCore-1.0.0.jar" ]; then
     echo "Copying BoxPvPCore plugin to plugins folder..."
-    cp target/BoxPvPCore-1.0.0.jar plugins/
+    cp ../target/BoxPvPCore-1.0.0.jar plugins/
     echo "Plugin copied successfully!"
 else
     echo "WARNING: BoxPvPCore plugin not found in target folder!"
@@ -41,7 +47,7 @@ max-players=20
 server-ip=0.0.0.0
 EOF
 
-echo "Starting Minecraft server..."
+echo "Starting Minecraft server from BoxPvP directory..."
 echo "RAM: 512MB (Replit Free Tier)"
 echo "Connect using: <repl-url>:25565"
 echo "================================"
