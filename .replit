@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["maven"]
+packages = ["maven", "wget"]
 
 [workflows]
 runButton = "Build & Run Server"
@@ -45,3 +45,7 @@ args = "mvn clean package"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./start-server.sh"
+
+[[ports]]
+localPort = 25565
+externalPort = 80
