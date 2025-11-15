@@ -27,5 +27,5 @@ motd=§8§m━━━§r §b§l◆ §3§lOCEAN BOXPVP §b§l◆ §8§m━━━\n
 max-players=20
 EOF
 
-# Start server
-java -Xmx2048M -Xms1024M -jar paper.jar nogui
+# Start server (reduced RAM for Replit free tier)
+java -Xmx512M -Xms256M -jar paper.jar nogui
