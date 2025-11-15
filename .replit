@@ -7,7 +7,7 @@ channel = "stable-25_05"
 packages = ["maven"]
 
 [workflows]
-runButton = "Project"
+runButton = "Build & Run Server"
 
 [[workflows.workflow]]
 name = "Project"
@@ -28,3 +28,20 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "mvn clean package"
+
+[[workflows.workflow]]
+name = "Build & Run Server"
+author = 49706662
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "chmod +x start-server.sh"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mvn clean package"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./start-server.sh"
