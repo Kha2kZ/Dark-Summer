@@ -119,25 +119,38 @@ public class TradeCommand implements CommandExecutor, Listener {
     private void openTradeGUI(Player player, TradeSession session) {
         Inventory inv = Bukkit.createInventory(null, 54, TRADE_GUI_TITLE);
         
-        ItemStack separator = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        // Center separator
+        ItemStack separator = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
         ItemMeta separatorMeta = separator.getItemMeta();
-        separatorMeta.setDisplayName(" ");
+        separatorMeta.setDisplayName("§e§l⬌ Trade Window");
+        separatorMeta.setLore(Arrays.asList("§7Your items: Left side", "§7Their items: Right side"));
         separator.setItemMeta(separatorMeta);
         
         for (int i = 4; i <= 49; i += 9) {
             inv.setItem(i, separator);
         }
         
+        // Bottom decoration
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta grayMeta = grayPane.getItemMeta();
+        grayMeta.setDisplayName(" ");
+        grayPane.setItemMeta(grayMeta);
+        for (int i = 45; i < 54; i++) {
+            if (i != 45 && i != 53) {
+                inv.setItem(i, grayPane);
+            }
+        }
+        
         ItemStack confirmButton = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
         ItemMeta confirmMeta = confirmButton.getItemMeta();
-        confirmMeta.setDisplayName("§a§lConfirm Trade");
-        confirmMeta.setLore(Arrays.asList("§7Click to confirm the trade"));
+        confirmMeta.setDisplayName("§a§l✔ Confirm Trade");
+        confirmMeta.setLore(Arrays.asList("§7Click to confirm the trade", "§7Both players must confirm"));
         confirmButton.setItemMeta(confirmMeta);
         inv.setItem(45, confirmButton);
         
         ItemStack cancelButton = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemMeta cancelMeta = cancelButton.getItemMeta();
-        cancelMeta.setDisplayName("§c§lCancel Trade");
+        cancelMeta.setDisplayName("§c§l✖ Cancel Trade");
         cancelMeta.setLore(Arrays.asList("§7Click to cancel the trade"));
         cancelButton.setItemMeta(cancelMeta);
         inv.setItem(53, cancelButton);

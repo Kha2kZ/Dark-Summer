@@ -84,6 +84,29 @@ public class CreateGiftCodeCommand implements CommandExecutor, Listener {
     private void openCreationGUI(Player player) {
         Inventory gui = Bukkit.createInventory(null, 54, GUI_TITLE);
         
+        // Top row decoration
+        ItemStack bluePane = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        ItemMeta blueMeta = bluePane.getItemMeta();
+        blueMeta.setDisplayName(" ");
+        bluePane.setItemMeta(blueMeta);
+        for (int i = 0; i < 9; i++) {
+            gui.setItem(i, bluePane);
+        }
+        
+        // Info panel at top center
+        ItemStack infoIcon = new ItemStack(Material.BOOK);
+        ItemMeta infoMeta = infoIcon.getItemMeta();
+        infoMeta.setDisplayName("§b§lGift Code Creator");
+        infoMeta.setLore(Arrays.asList(
+            "§71. Hold the item you want to add",
+            "§72. Click any empty slot (9-44)",
+            "§73. The item will be added as a reward",
+            "",
+            "§7Right-click items to remove them"
+        ));
+        infoIcon.setItemMeta(infoMeta);
+        gui.setItem(4, infoIcon);
+        
         ItemStack moneyIcon = new ItemStack(Material.GOLD_INGOT);
         ItemMeta moneyMeta = moneyIcon.getItemMeta();
         moneyMeta.setDisplayName("§6§lMoney Reward");
@@ -126,22 +149,9 @@ public class CreateGiftCodeCommand implements CommandExecutor, Listener {
         coinsIcon.setItemMeta(coinsMeta);
         gui.setItem(47, coinsIcon);
         
-        ItemStack infoIcon = new ItemStack(Material.BOOK);
-        ItemMeta infoMeta = infoIcon.getItemMeta();
-        infoMeta.setDisplayName("§b§lHow to Add Items");
-        infoMeta.setLore(Arrays.asList(
-            "§71. Hold the item you want to add",
-            "§72. Click any empty slot (0-44)",
-            "§73. The item will be added as a reward",
-            "",
-            "§7Right-click items to remove them"
-        ));
-        infoIcon.setItemMeta(infoMeta);
-        gui.setItem(49, infoIcon);
-        
         ItemStack createIcon = new ItemStack(Material.LIME_CONCRETE);
         ItemMeta createMeta = createIcon.getItemMeta();
-        createMeta.setDisplayName("§a§lCREATE GIFT CODE");
+        createMeta.setDisplayName("§a§l✔ CREATE");
         createMeta.setLore(Arrays.asList(
             "§7Click to finalize and save",
             "§7this gift code"
@@ -151,7 +161,7 @@ public class CreateGiftCodeCommand implements CommandExecutor, Listener {
         
         ItemStack cancelIcon = new ItemStack(Material.RED_CONCRETE);
         ItemMeta cancelMeta = cancelIcon.getItemMeta();
-        cancelMeta.setDisplayName("§c§lCANCEL");
+        cancelMeta.setDisplayName("§c§l✖ CANCEL");
         cancelMeta.setLore(Arrays.asList(
             "§7Discard this gift code"
         ));

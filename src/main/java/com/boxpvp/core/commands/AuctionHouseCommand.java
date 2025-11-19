@@ -122,6 +122,17 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
         String guiTitle = AH_GUI_BASE_TITLE + " §7- §f[" + (page + 1) + "/" + totalPages + "]";
         Inventory inv = Bukkit.createInventory(null, 54, guiTitle);
 
+        // Bottom row decoration except navigation buttons
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta grayMeta = grayPane.getItemMeta();
+        grayMeta.setDisplayName(" ");
+        grayPane.setItemMeta(grayMeta);
+        for (int i = 45; i < 54; i++) {
+            if (i != 45 && i != 49 && i != 53) {
+                inv.setItem(i, grayPane);
+            }
+        }
+
         int startIndex = page * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, listings.size());
 
@@ -135,14 +146,15 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
             ItemStack prevPage = new ItemStack(Material.ARROW);
             ItemMeta prevMeta = prevPage.getItemMeta();
             prevMeta.setDisplayName("§e§l◀ Previous Page");
+            prevMeta.setLore(Arrays.asList("§7Trang " + page + "/" + totalPages));
             prevPage.setItemMeta(prevMeta);
             inv.setItem(45, prevPage);
         }
 
         ItemStack refreshButton = new ItemStack(Material.SUNFLOWER);
         ItemMeta refreshMeta = refreshButton.getItemMeta();
-        refreshMeta.setDisplayName("§a§lRefresh Page");
-        refreshMeta.setLore(Arrays.asList("§7Click to refresh listings"));
+        refreshMeta.setDisplayName("§a§l⟳ Refresh");
+        refreshMeta.setLore(Arrays.asList("§7Click to refresh listings", "§7Trang " + (page + 1) + "/" + totalPages));
         refreshButton.setItemMeta(refreshMeta);
         inv.setItem(49, refreshButton);
 
@@ -150,6 +162,7 @@ public class AuctionHouseCommand implements CommandExecutor, Listener {
             ItemStack nextPage = new ItemStack(Material.ARROW);
             ItemMeta nextMeta = nextPage.getItemMeta();
             nextMeta.setDisplayName("§e§lNext Page ▶");
+            nextMeta.setLore(Arrays.asList("§7Trang " + (page + 2) + "/" + totalPages));
             nextPage.setItemMeta(nextMeta);
             inv.setItem(53, nextPage);
         }

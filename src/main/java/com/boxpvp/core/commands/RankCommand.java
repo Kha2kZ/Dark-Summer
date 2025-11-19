@@ -49,26 +49,59 @@ public class RankCommand implements CommandExecutor, Listener {
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player);
         Rank currentRank = data.getRank();
         
+        // Top and bottom decoration
+        ItemStack cyanPane = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
+        ItemMeta cyanMeta = cyanPane.getItemMeta();
+        cyanMeta.setDisplayName(" ");
+        cyanPane.setItemMeta(cyanMeta);
         for (int i = 0; i < 9; i++) {
-            ItemStack glassPane = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
-            ItemMeta glassMeta = glassPane.getItemMeta();
-            glassMeta.setDisplayName(" ");
-            glassPane.setItemMeta(glassMeta);
-            gui.setItem(i, glassPane);
+            gui.setItem(i, cyanPane);
+            gui.setItem(45 + i, cyanPane);
         }
         
+        // Side decorations
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta grayMeta = grayPane.getItemMeta();
+        grayMeta.setDisplayName(" ");
+        grayPane.setItemMeta(grayMeta);
+        for (int i = 9; i <= 36; i += 9) {
+            gui.setItem(i, grayPane);
+            gui.setItem(i + 8, grayPane);
+        }
+        
+        // Player info head
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
         org.bukkit.inventory.meta.SkullMeta skullMeta = (org.bukkit.inventory.meta.SkullMeta) playerHead.getItemMeta();
         skullMeta.setOwningPlayer(player);
         skullMeta.setDisplayName("§e§l" + player.getName());
         List<String> headLore = new ArrayList<>();
-        headLore.add("§7Current Rank: " + currentRank.getDisplayName());
-        headLore.add("§7Coins: §6" + String.format("%.0f", data.getCoins()));
+        headLore.add("");
+        headLore.add("§7Rank hiện tại: " + currentRank.getDisplayName());
+        headLore.add("§7Số dư: §6" + String.format("%.0f", data.getCoins()) + " Coins");
+        headLore.add("");
+        headLore.add("§e§lMua rank để mở khóa quyền lợi!");
         skullMeta.setLore(headLore);
         playerHead.setItemMeta(skullMeta);
         gui.setItem(4, playerHead);
         
-        int[] slots = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29};
+        // Info book
+        ItemStack infoBook = new ItemStack(Material.BOOK);
+        ItemMeta bookMeta = infoBook.getItemMeta();
+        bookMeta.setDisplayName("§b§lHướng dẫn");
+        List<String> bookLore = new ArrayList<>();
+        bookLore.add("");
+        bookLore.add("§7§oMua rank theo thứ tự từ thấp đến cao");
+        bookLore.add("§7§oMỗi rank có nhiều quyền lợi hơn");
+        bookLore.add("");
+        bookLore.add("§a§lMàu xanh: §7Đã sở hữu");
+        bookLore.add("§e§lMàu vàng: §7Có thể mua");
+        bookLore.add("§c§lMàu đỏ: §7Chưa mở khóa");
+        bookMeta.setLore(bookLore);
+        infoBook.setItemMeta(bookMeta);
+        gui.setItem(49, infoBook);
+        
+        // Rank items in center
+        int[] slots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
         int index = 0;
         
         for (Rank rank : Rank.values()) {
