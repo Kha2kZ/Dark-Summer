@@ -152,22 +152,34 @@ autocraft:
 ## Development Notes
 
 ### Recent Changes (Latest Session)
-**November 11, 2025 - GUI Improvements**
-- ✅ **GUI /ah (Auction House)**: 
-  - Đổi title từ "Black Market" thành "Auction - [page/total]"
-  - Di chuyển navigation: Previous (slot 45), Refresh/Sunflower (slot 49), Next (slot 53)
-  - Bỏ currency filter button
-- ✅ **GUI /rank (Rank Shop)**:
-  - Thêm cyan glass pane decoration ở hàng trên cùng
-  - Player head với coin display ở slot 4
-  - Format lại rank info: Giá + Quyền lợi + Đã sở hữu (✓/✗)
-  - Ẩn "Dyed (Vanilla)" và attributes với ItemFlags
-- ✅ **GUI /item create (Custom Items)**:
-  - Thêm Name Tag button cho chat input (slot 16)
-  - Chat listener để nhập tên với color codes (&a, &c, etc.)
-  - Confirmation GUI với green/red stained glass panes
-  - Name tag preview hiển thị tên sẽ áp dụng
-  - Session persistence qua confirmation flow
+**November 19, 2025 - Major GUI Overhaul & Item Creation Redesign**
+- ✅ **Rank Display Names**: Added bold formatting (§l) to all 15 rank names for better visibility
+- ✅ **GUI /item create (Unified Item Editor)**:
+  - Removed separate tool/weapon selection GUIs
+  - Streamlined flow: Select type → Open unified editor immediately
+  - Single editor GUI with ALL options: Efficiency, Fortune, Damage, Attack Speed, Level, Rarity
+  - Fixed all conversation prompts to reopen unified editor (no more orphaned old GUIs)
+  - Architect verified: All prompts (name, material, stats) correctly route back
+- ✅ **GUI /rank (Professional Layout)**:
+  - Top + bottom cyan glass pane borders
+  - Side gray glass pane decorations
+  - Centered player head with rank info and balance
+  - Info book with purchase guide (slot 49)
+  - Improved lore formatting with Vietnamese instructions
+- ✅ **GUI /ah (Enhanced Auction House)**:
+  - Bottom row decorations (gray panes) around navigation
+  - Improved refresh button with page indicators
+  - Vietnamese page numbers in navigation lore
+- ✅ **GUI /giftcode (Gift Code Creator)**:
+  - Top row light blue glass pane decoration
+  - Info panel moved to top center (slot 4)
+  - Enhanced button labels with symbols (✔/✖)
+- ✅ **GUI /trade (Trade Window)**:
+  - Yellow separator with descriptive lore
+  - Bottom gray decorations (skipping slot 49 for separator)
+  - Fixed slot conflict identified by architect review
+  - Enhanced button labels with symbols
+- ✅ **Build Status**: Maven build successful (7.6s), no compile errors
 
 **Previous Implementation**
 - ✅ Implemented complete 15-tier rank system with Rank enum
