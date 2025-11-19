@@ -130,13 +130,13 @@ public class TradeCommand implements CommandExecutor, Listener {
             inv.setItem(i, separator);
         }
         
-        // Bottom decoration
+        // Bottom decoration (skip separator at slot 49)
         ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta grayMeta = grayPane.getItemMeta();
         grayMeta.setDisplayName(" ");
         grayPane.setItemMeta(grayMeta);
         for (int i = 45; i < 54; i++) {
-            if (i != 45 && i != 53) {
+            if (i != 45 && i != 49 && i != 53) {
                 inv.setItem(i, grayPane);
             }
         }
