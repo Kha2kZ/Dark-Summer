@@ -68,36 +68,90 @@ public class ItemCommand implements CommandExecutor, Listener {
     private void openCreationGUI(Player player) {
         ItemCreationSession session = new ItemCreationSession();
         sessions.put(player.getUniqueId(), session);
-        openCreationGUIWithSession(player, session);
+        openItemEditorGUI(player, session);
     }
 
-    private void openCreationGUIWithSession(Player player, ItemCreationSession session) {
+    private void openItemEditorGUI(Player player, ItemCreationSession session) {
         Inventory inv = Bukkit.createInventory(null, 54, CREATION_GUI_TITLE);
 
-        // Top decoration
+        // Decoration - Top and Bottom rows
+        ItemStack bluePane = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        ItemMeta blueMeta = bluePane.getItemMeta();
+        blueMeta.setDisplayName(" ");
+        bluePane.setItemMeta(blueMeta);
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(i, bluePane);
+            inv.setItem(45 + i, bluePane);
+        }
+
+        // Left column decoration
         ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta grayMeta = grayPane.getItemMeta();
         grayMeta.setDisplayName(" ");
         grayPane.setItemMeta(grayMeta);
-        for (int i = 0; i < 9; i++) {
+        for (int i = 9; i <= 36; i += 9) {
             inv.setItem(i, grayPane);
-            inv.setItem(45 + i, grayPane);
         }
 
-        // Item Type Selection
-        ItemStack toolIcon = new ItemStack(Material.DIAMOND_PICKAXE);
-        ItemMeta toolMeta = toolIcon.getItemMeta();
-        toolMeta.setDisplayName("§b§lTOOL");
-        toolMeta.setLore(Arrays.asList("§7Create a custom tool", "§7(Pickaxe, Axe, Shovel, Hoe)"));
-        toolIcon.setItemMeta(toolMeta);
-        inv.setItem(20, toolIcon);
+        // Config buttons - Left side
+        inv.setItem(11, createConfigButton(Material.NAME_TAG, "§e§lItem Name", 
+            session.customName != null ? session.customName : "§7Not set", session.customName != null));
+        
+        inv.setItem(20, createConfigButton(Material.PAPER, "§e§lItem Display", 
+            session.displayMaterial != null ? session.displayMaterial.name() : "§7Not set", session.displayMaterial != null));
+        
+        inv.setItem(29, createConfigButton(Material.EXPERIENCE_BOTTLE, "§e§lLevel", 
+            session.level.getRomanNumeral(), true));
 
-        ItemStack weaponIcon = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta weaponMeta = weaponIcon.getItemMeta();
-        weaponMeta.setDisplayName("§c§lWEAPON");
-        weaponMeta.setLore(Arrays.asList("§7Create a custom weapon", "§7(Sword, Axe with combat stats)"));
-        weaponIcon.setItemMeta(weaponMeta);
-        inv.setItem(24, weaponIcon);
+        // Config buttons - Right side  
+        inv.setItem(15, createConfigButton(Material.ENCHANTED_BOOK, "§a§lEfficiency", 
+            "Level: " + session.stats.getEfficiency(), session.stats.getEfficiency() > 0));
+        
+        inv.setItem(16, createConfigButton(Material.EMERALD, "§a§lFortune", 
+            "Level: " + session.stats.getFortune(), session.stats.getFortune() > 0));
+        
+        inv.setItem(24, createConfigButton(Material.IRON_SWORD, "§c§lDamage", 
+            "+" + session.weaponDamage + " DMG", session.weaponDamage > 0));
+        
+        inv.setItem(25, createConfigButton(Material.SUGAR, "§c§lAttack Speed", 
+            session.weaponSpeed + " APS", session.weaponSpeed > 0));
+        
+        inv.setItem(33, createConfigButton(Material.NETHER_STAR, "§d§lRarity", 
+            session.rarity.getDisplayName(), true));
+
+        // Info panel
+        ItemStack infoIcon = new ItemStack(Material.BOOK);
+        ItemMeta infoMeta = infoIcon.getItemMeta();
+        infoMeta.setDisplayName("§b§lCustom Item Creator");
+        infoMeta.setLore(Arrays.asList(
+            "§7Create tools or weapons with custom stats",
+            "",
+            "§e§lTool Stats:",
+            "§7• Efficiency & Fortune",
+            "",
+            "§c§lWeapon Stats:",
+            "§7• Damage & Attack Speed",
+            "",
+            "§aSet all stats as needed!"
+        ));
+        infoIcon.setItemMeta(infoMeta);
+        inv.setItem(4, infoIcon);
+
+        // Preview button
+        ItemStack preview = new ItemStack(Material.CHEST);
+        ItemMeta previewMeta = preview.getItemMeta();
+        previewMeta.setDisplayName("§a§lPREVIEW ITEM");
+        previewMeta.setLore(Arrays.asList("§7Click to see how your", "§7item will look"));
+        preview.setItemMeta(previewMeta);
+        inv.setItem(48, preview);
+
+        // Create button
+        ItemStack create = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+        ItemMeta createMeta = create.getItemMeta();
+        createMeta.setDisplayName("§a§l✔ CREATE ITEM");
+        createMeta.setLore(Arrays.asList("§7Click to create your custom item"));
+        create.setItemMeta(createMeta);
+        inv.setItem(50, create);
 
         player.openInventory(inv);
     }
@@ -218,18 +272,7 @@ public class ItemCommand implements CommandExecutor, Listener {
         
         if (title.equals(CREATION_GUI_TITLE)) {
             event.setCancelled(true);
-            ItemCreationSession session = sessions.get(player.getUniqueId());
-            if (session == null) return;
-            
-            int slot = event.getRawSlot();
-            
-            if (slot == 20) { // Tool
-                session.itemType = "tool";
-                openToolCreationGUI(player, session);
-            } else if (slot == 24) { // Weapon
-                session.itemType = "weapon";
-                openWeaponCreationGUI(player, session);
-            }
+            handleItemEditorClick(player, event.getRawSlot());
         } else if (title.equals("§b§lCreate Tool")) {
             event.setCancelled(true);
             handleToolGUIClick(player, event.getRawSlot());
@@ -238,6 +281,58 @@ public class ItemCommand implements CommandExecutor, Listener {
             handleWeaponGUIClick(player, event.getRawSlot());
         } else if (title.equals(PREVIEW_GUI_TITLE)) {
             event.setCancelled(true);
+        }
+    }
+
+    private void handleItemEditorClick(Player player, int slot) {
+        ItemCreationSession session = sessions.get(player.getUniqueId());
+        if (session == null) return;
+        
+        switch (slot) {
+            case 11: // Name
+                promptForName(player, session);
+                break;
+            case 20: // Display Material
+                promptForMaterial(player, session);
+                break;
+            case 15: // Efficiency
+                promptForEfficiency(player, session);
+                break;
+            case 16: // Fortune
+                promptForFortune(player, session);
+                break;
+            case 24: // Damage
+                promptForDamage(player, session);
+                break;
+            case 25: // Attack Speed
+                promptForAttackSpeed(player, session);
+                break;
+            case 29: // Level
+                cycleLevel(session);
+                openItemEditorGUI(player, session);
+                break;
+            case 33: // Rarity
+                cycleRarity(session);
+                openItemEditorGUI(player, session);
+                break;
+            case 48: // Preview
+                showPreview(player, session, hasWeaponStats(session));
+                break;
+            case 50: // Create
+                createCustomItem(player, session);
+                break;
+        }
+    }
+
+    private boolean hasWeaponStats(ItemCreationSession session) {
+        return session.weaponDamage > 0 || session.weaponSpeed > 0;
+    }
+
+    private void createCustomItem(Player player, ItemCreationSession session) {
+        if (hasWeaponStats(session)) {
+            createCustomWeapon(player, session);
+        } else {
+            createCustomTool(player, session);
         }
     }
 
@@ -328,13 +423,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                     }
                     
                     session.customName = translateColorCodes(input);
-                    Bukkit.getScheduler().runTask(plugin, () -> {
-                        if (session.itemType.equals("tool")) {
-                            openToolCreationGUI(player, session);
-                        } else {
-                            openWeaponCreationGUI(player, session);
-                        }
-                    });
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
@@ -370,13 +459,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                         player.sendMessage("§cInvalid material!");
                     }
                     
-                    Bukkit.getScheduler().runTask(plugin, () -> {
-                        if (session.itemType.equals("tool")) {
-                            openToolCreationGUI(player, session);
-                        } else {
-                            openWeaponCreationGUI(player, session);
-                        }
-                    });
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
@@ -401,7 +484,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                 @Override
                 protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
                     session.stats.setEfficiency(Math.max(0, Math.min(10, input.intValue())));
-                    Bukkit.getScheduler().runTask(plugin, () -> openToolCreationGUI(player, session));
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
@@ -425,7 +508,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                 @Override
                 protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
                     session.stats.setFortune(Math.max(0, Math.min(10, input.intValue())));
-                    Bukkit.getScheduler().runTask(plugin, () -> openToolCreationGUI(player, session));
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
@@ -449,7 +532,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                 @Override
                 protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
                     session.weaponDamage = Math.max(1, Math.min(100, input.doubleValue()));
-                    Bukkit.getScheduler().runTask(plugin, () -> openWeaponCreationGUI(player, session));
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
@@ -473,7 +556,7 @@ public class ItemCommand implements CommandExecutor, Listener {
                 @Override
                 protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
                     session.weaponSpeed = Math.max(1, Math.min(20, input.doubleValue()));
-                    Bukkit.getScheduler().runTask(plugin, () -> openWeaponCreationGUI(player, session));
+                    Bukkit.getScheduler().runTask(plugin, () -> openItemEditorGUI(player, session));
                     return Prompt.END_OF_CONVERSATION;
                 }
             })
