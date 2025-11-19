@@ -149,7 +149,7 @@ public enum Rank {
     }
 
     public String getDisplayName() {
-        return colorCode + name().replace("_", "+");
+        return colorCode + "§l" + name().replace("_", "+");
     }
 
     // This method was added to fulfill the user's request to get the color code.
