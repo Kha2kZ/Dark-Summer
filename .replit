@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["maven", "wget", "unzip"]
+packages = ["freetype", "lcms2", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "maven", "openjpeg", "tcl", "tk", "unzip", "wget", "zlib"]
 
 [workflows]
 runButton = "Build & Run Server"
